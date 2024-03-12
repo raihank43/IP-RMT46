@@ -1,10 +1,12 @@
 const express = require("express");
+const HomeController = require("./controllers/HomeController");
 const app = express();
 const port = 3000;
 
-app.get("/", (req, res) => {
-  res.json("hello world");
-});
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
+app.get("/", HomeController.Home);
 
 app.listen(port, () => {
   console.log("app running on port 3000");
