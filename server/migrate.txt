@@ -29,3 +29,11 @@ Commands:
     npx sequelize model:generate --name Group --attributes name:string
     npx sequelize model:generate --name GroupMessage --attributes UserId:integer,GroupId:integer,text:string
     npx sequelize model:generate --name UserGroup --attributes UserId:integer,GroupId:integer
+
+
+    npx sequelize seed:generate --name seed-users
+    npx sequelize seed:generate --name seed-profiles
+    npx sequelize seed:generate --name seed-privatemessages
+    npx sequelize seed:generate --name seed-groups
+    npx sequelize seed:generate --name seed-groupmessage
+    npx sequelize seed:generate --name seed-usergroups

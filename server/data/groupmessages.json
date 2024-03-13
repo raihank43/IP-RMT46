@@ -1,0 +1,5 @@
+[
+  { "UserId": 1, "GroupId": 1, "text": "Hello everyone in Group 1!" },
+  { "UserId": 2, "GroupId": 1, "text": "Hello Alice!" },
+  { "UserId": 3, "GroupId": 2, "text": "Hello everyone in Group 2!" }
+]

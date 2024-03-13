@@ -1,0 +1,5 @@
+[
+  { "SenderId": 1, "ReceiverId": 2, "text": "Hello Bob!" },
+  { "SenderId": 2, "ReceiverId": 1, "text": "Hello Alice!" },
+  { "SenderId": 1, "ReceiverId": 3, "text": "Hello Charlie!" }
+]
