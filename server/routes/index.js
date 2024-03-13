@@ -10,6 +10,7 @@ router.post("/login", UserController.Login);
 
 router.use(authentication);
 router.get("/", HomeController.Home);
-router.get("/:username/message", MessageController.getDirectMessages)
+router.get("/:username/message", MessageController.getDirectMessages);
+router.post("/:username/message", MessageController.sendDirectMessage);
 
 module.exports = router;
