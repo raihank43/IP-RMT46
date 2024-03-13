@@ -20,6 +20,7 @@ async function authentication(req, res, next) {
     }
 
     req.user = {
+      username: user.username,
       id: user.id,
       email: user.email,
     };
