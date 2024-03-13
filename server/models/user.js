@@ -34,6 +34,10 @@ module.exports = (sequelize, DataTypes) => {
       username: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: {
+          args: true,
+          msg: "Email must be Unique.",
+        },
         validate: {
           notEmpty: {
             msg: { msg: "Username is required." },
