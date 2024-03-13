@@ -12,6 +12,7 @@ router.post("/login", UserController.Login);
 router.use(authentication);
 router.get("/", HomeController.Home);
 router.get("/profile", ProfileController.getAllProfiles);
+router.get("/profile/:username", ProfileController.getProfileByUsername);
 router.post("/profile", ProfileController.createProfile);
 router.get("/:username/message", MessageController.getDirectMessages);
 router.post("/:username/message", MessageController.sendDirectMessage);
