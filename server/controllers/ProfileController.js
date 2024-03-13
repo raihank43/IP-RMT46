@@ -18,7 +18,7 @@ module.exports = class ProfileController {
       const findUser = await Profile.findOne({
         where: { UserId: req.user.id },
       });
-      console.log(findUser);
+      //   console.log(findUser);
       if (findUser) {
         throw {
           name: "CustomError",
@@ -57,6 +57,41 @@ module.exports = class ProfileController {
       }
 
       res.status(200).json(findProfile.Profile);
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  }
+
+  static async updateProfile(req, res, next) {
+    try {
+      const { username } = req.params;
+      const { fullName, profileImgUrl, bio } = req.body;
+      const userProfile = await User.findOne({
+        where: { username: username },
+        include: "Profile",
+      });
+      if (!userProfile) {
+        throw {
+          name: "CustomError",
+          status: 404,
+          message: "Profile not Found.",
+        };
+      }
+
+      //   console.log(userProfile.Profile.id);
+
+      const updatedProfile = await Profile.update(
+        {
+          UserId: req.user.id,
+          fullName,
+          profileImgUrl,
+          bio,
+        },
+        { where: { id: userProfile.Profile.id } }
+      );
+
+      res.status(200).json({ message: "Profile updated Succesfully." });
     } catch (error) {
       console.log(error);
       next(error);
