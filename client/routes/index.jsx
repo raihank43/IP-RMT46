@@ -1,6 +1,8 @@
 import React from "react";
 import { createBrowserRouter, redirect } from "react-router-dom";
 import Login from "../views/Login";
+import Home from "../views/Home";
+import DirectMessage from "../views/DirectMessage";
 
 const router = createBrowserRouter([
   {
@@ -12,7 +14,14 @@ const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: <h1> Hello from router</h1>,
+    element: <Home />,
+    loader: () => {
+      return !localStorage.getItem("token") ? redirect("/login") : null;
+    },
+  },
+  {
+    path: "/:username/message",
+    element: <DirectMessage />,
     loader: () => {
       return !localStorage.getItem("token") ? redirect("/login") : null;
     },

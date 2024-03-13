@@ -1,0 +1,102 @@
+:root {
+  /* CSS HEX */
+  --gunmetal: #022b3aff;
+  --teal: #1f7a8cff;
+  --columbia-blue: #bfdbf7ff;
+  --lavender-web: #e1e5f2ff;
+  --white: #ffffffff;
+  --emerald: #86cb92ff;
+  --mint: #71b48dff;
+  --yinmn-blue: #404e7cff;
+  --space-cadet: #251f47ff;
+  --dark-purple: #260f26ff;
+}
+
+* {
+  margin: 0;
+  font-family: "Lexend", sans-serif;
+  /* color: white; */
+}
+
+.homepage-container {
+  color: white;
+  /* border: solid black; */
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 0.2fr 1fr;
+}
+
+.profile-tabs {
+  /* border: solid black; */
+
+  background-color: var(--gunmetal);
+}
+
+.chat-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  background-color: var(--yinmn-blue);
+  /* border: solid black; */
+  gap: 10px;
+}
+
+.chat-container {
+  /* border: solid black; */
+  padding: 20px;
+  background-color: var(--teal);
+}
+
+.chat-container img {
+  width: 100px; /* Atur ukuran gambar */
+  height: 100px; /* Atur ukuran gambar */
+  border-radius: 50%; /* Membuat gambar bulat */
+}
+.chat-container-header {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  /* border: solid black; */
+
+  margin-bottom: 20px;
+}
+
+.message-form {
+  /* border: solid black; */
+}
+.message-form > form > button {
+  color: black;
+}
+
+.profile-tabs {
+  gap: 20px;
+}
+
+.peoples {
+  padding: 10px;
+  gap: 20px;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+}
+
+.people-info {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.people-name {
+  font-weight: bold;
+}
+/* .people-bio {
+  border: solid black;
+} */
+
+.peoples > img {
+  width: 50px; /* Atur ukuran gambar */
+  height: 50px; /* Atur ukuran gambar */
+  border-radius: 50%; /* Membuat gambar bulat */
+}
