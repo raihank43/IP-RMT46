@@ -1,3 +1,4 @@
+const { Op } = require("sequelize");
 const { PrivateMessage, GroupMessage, User } = require("../models");
 
 module.exports = class MessageController {
@@ -18,11 +19,12 @@ module.exports = class MessageController {
 
       const privateMessages = await PrivateMessage.findAll({
         where: {
-          SenderId: req.user.id,
-          ReceiverId: findReceivedUser.id,
+          [Op.or]: [
+            { SenderId: req.user.id, ReceiverId: findReceivedUser.id },
+            { SenderId: findReceivedUser.id, ReceiverId: req.user.id },
+          ],
         },
       });
-
       res.status(200).json(privateMessages);
     } catch (error) {
       console.log(error);
