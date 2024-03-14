@@ -76,6 +76,9 @@ module.exports = class UserController {
       // generate username logic
       const [username] = email.split("@");
 
+      const google = ticket.getPayload();
+      console.log(google);
+
       const password = Math.random().toString();
 
       const [user, created] = await User.findOrCreate({
@@ -86,19 +89,21 @@ module.exports = class UserController {
           password: password,
         },
       });
-      // console.log({ user, created });
+      console.log({ user });
 
       // create Token
       const access_token = signToken({ id: user.id });
-      console.log(access_token)
+      // console.log(access_token);
 
-      // // automatically create profile
-      // await Profile.create({
-      //   UserId: req.user.id,
-      //   fullName: name,
-      //   profileImgUrl: picture,
-      //   bio: "",
-      // });
+      // automatically create profile
+      const findProfile = await Profile.findOrCreate({
+        where: { UserId: user.id },
+        defaults: {
+          fullName: name,
+          profileImgUrl: picture,
+          bio: "",
+        },
+      });
 
       res.status(200).json({ message: "Login Success", access_token });
     } catch (error) {

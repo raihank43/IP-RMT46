@@ -24,7 +24,7 @@ export default function Login() {
 
   //integration OAuth Login
   const handleCredentialResponse = async ({ credential }) => {
-    // console.log("Encoded JWT ID token: " + response.credential);
+    console.log("Encoded JWT ID token: " + credential);
     const { data } = await axios.post("/google-login", {
       googleToken: credential,
     });
