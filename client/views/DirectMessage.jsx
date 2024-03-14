@@ -3,7 +3,7 @@ import "../src/home.css";
 import axios from "../utils/axios";
 import { Link, useParams } from "react-router-dom";
 import LogoutButton from "../src/components/Logout";
-
+import { socket } from "../src/socket"; // tambahkan ini di bagian atas file
 
 export default function DirectMessage() {
   const [profile, setProfile] = useState("");
@@ -44,7 +44,7 @@ export default function DirectMessage() {
     event.preventDefault();
     try {
       console.log(sendMessage);
-      await axios({
+      const { data } = await axios({
         url: `/${username}/message`,
         method: "POST",
         headers: {
@@ -53,10 +53,27 @@ export default function DirectMessage() {
         data: { text: sendMessage },
       });
       fetchDirectMessages();
+      socket.emit("sendMessage", data);
     } catch (error) {
       console.log(error);
     }
   };
+  // tambahkan ini di dalam fungsi DirectMessage
+  useEffect(() => {
+    socket.connect();
+    socket.on("broadcastMessage", (newMessage) => {
+      // setMessage((prevMessages) => [...prevMessages, newMessage]);
+      fetchDirectMessages();
+      // console.log(message, "<<<<< ini message")
+    });
+
+    // socket.emit("sendMessage", message)
+
+    return () => {
+      socket.disconnect();
+      socket.off("broadcastMessage")
+    };
+  }, [message]);
 
   useEffect(() => {
     fetchProfiles();
@@ -87,7 +104,7 @@ export default function DirectMessage() {
                 );
               })
             : []}
-            <LogoutButton />
+          <LogoutButton />
         </div>
 
         <div className="chat-body">
