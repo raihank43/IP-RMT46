@@ -64,7 +64,7 @@ export default function DirectMessage() {
     fetchDirectMessages();
   }, [username]);
 
-  console.log(message)
+  // console.log(message)
   return (
     <>
       <div className="homepage-container">

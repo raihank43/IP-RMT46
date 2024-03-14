@@ -21,6 +21,36 @@ export default function Login() {
       console.log(error);
     }
   };
+
+  //integration OAuth Login
+  const handleCredentialResponse = async ({ credential }) => {
+    // console.log("Encoded JWT ID token: " + response.credential);
+    const { data } = await axios.post("/google-login", {
+      googleToken: credential,
+    });
+
+    console.log(data);
+    // simpan token di localStorage
+    localStorage.setItem("token", data.access_token);
+    navigate("/");
+  };
+  // google OAuth
+  useEffect(() => {
+    // function handleCredentialResponse(response) {
+    //   console.log("Encoded JWT ID token: " + response.credential);
+    // }
+    // window.onload = function () {};
+    google.accounts.id.initialize({
+      client_id:
+        "1044060974853-lb9uqphq6g3esqsuf2u0lv2063dgnonh.apps.googleusercontent.com",
+      callback: handleCredentialResponse,
+    });
+    google.accounts.id.renderButton(
+      document.getElementById("buttonDiv"),
+      { theme: "outline", size: "large" } // customization attributes
+    );
+    // google.accounts.id.prompt(); // also display the One Tap dialog
+  }, []);
   return (
     <>
       <div className="page-container">
@@ -57,6 +87,8 @@ export default function Login() {
               </form>
             </div>
             <div className="login-footer">
+              <div className="OR">- OR -</div>
+              <div id="buttonDiv"></div>
               <p>
                 Belum punya akun? Silahkan <a href="">Register.</a>
               </p>

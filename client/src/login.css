@@ -52,7 +52,7 @@
 .login-body {
   margin: 0px;
   margin-top: 10px;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
 }
 
 .login-body > form {
@@ -93,6 +93,20 @@
 
 .login-button > button:hover {
   background-color: rgb(82, 117, 161);
+}
+/* .login-footer {
+  border: solid black
+} */
+
+.login-footer > .OR {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.login-footer > #buttonDiv {
+  display: flex;
+  justify-content: center;
 }
 
 .login-footer > p {

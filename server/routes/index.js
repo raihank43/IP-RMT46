@@ -7,6 +7,7 @@ const router = express.Router();
 
 router.post("/register", UserController.Register);
 router.post("/login", UserController.Login);
+router.post("/google-login", UserController.googleLogin)
 
 router.use(authentication);
 router.get("/", HomeController.Home);
