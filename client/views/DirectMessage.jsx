@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import "../src/home.css";
 import axios from "../utils/axios";
 import { Link, useParams } from "react-router-dom";
+import LogoutButton from "../src/components/Logout";
+
 
 export default function DirectMessage() {
   const [profile, setProfile] = useState("");
@@ -85,6 +87,7 @@ export default function DirectMessage() {
                 );
               })
             : []}
+            <LogoutButton />
         </div>
 
         <div className="chat-body">

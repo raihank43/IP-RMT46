@@ -90,6 +90,7 @@ module.exports = class UserController {
 
       // create Token
       const access_token = signToken({ id: user.id });
+      console.log(access_token)
 
       // // automatically create profile
       // await Profile.create({

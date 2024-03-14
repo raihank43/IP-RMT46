@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "../src/home.css";
 import axios from "../utils/axios";
 import { Link, useNavigate } from "react-router-dom";
+import LogoutButton from "../src/components/Logout";
 
 export default function Home() {
   const [profile, setProfile] = useState("");
@@ -48,6 +49,7 @@ export default function Home() {
                 );
               })
             : []}
+            <LogoutButton/>
         </div>
 
         <div className="chat-body">
