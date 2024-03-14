@@ -41,6 +41,7 @@ export default function DirectMessage() {
   const handleSendMessage = async (event) => {
     event.preventDefault();
     try {
+      console.log(sendMessage);
       await axios({
         url: `/${username}/message`,
         method: "POST",
@@ -62,6 +63,8 @@ export default function DirectMessage() {
   useEffect(() => {
     fetchDirectMessages();
   }, [username]);
+
+  console.log(message)
   return (
     <>
       <div className="homepage-container">
@@ -90,12 +93,9 @@ export default function DirectMessage() {
                 return (
                   <div className="chat-container">
                     <div className="chat-container-header">
-                      <img
-                        src="https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-High-Quality-Image.png"
-                        alt=""
-                      />
+                      <img src={el.Sender.Profile.profileImgUrl} alt="" />
                       <div className="chat-container-message-body"></div>
-                      <h2>MyName</h2>
+                      <h2>{el.Sender.username}</h2>
                     </div>
 
                     <p>{el.text}</p>

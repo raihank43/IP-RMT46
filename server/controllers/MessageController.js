@@ -1,5 +1,5 @@
 const { Op } = require("sequelize");
-const { PrivateMessage, GroupMessage, User } = require("../models");
+const { PrivateMessage, GroupMessage, User, Profile } = require("../models");
 
 module.exports = class MessageController {
   static async getDirectMessages(req, res, next) {
@@ -17,14 +17,45 @@ module.exports = class MessageController {
         throw { name: "CustomError", status: 404, message: "User not Found." };
       }
 
-      const privateMessages = await PrivateMessage.findAll({
+      let privateMessages = await PrivateMessage.findAll({
         where: {
           [Op.or]: [
             { SenderId: req.user.id, ReceiverId: findReceivedUser.id },
             { SenderId: findReceivedUser.id, ReceiverId: req.user.id },
           ],
         },
+        include: [
+          {
+            model: User,
+            as: "Sender",
+            attributes: ["username"],
+            include: [
+              {
+                model: Profile,
+                as: "Profile",
+                attributes: ["profileImgUrl", "fullName"],
+              },
+            ],
+          },
+        ],
+        order: [["createdAt", "ASC"]],
       });
+
+      // handling duplicate data
+      privateMessages = privateMessages.reduce((akumulator, item) => {
+        if (
+          !akumulator.some(
+            (obj) =>
+              obj.id === item.id &&
+              obj.SenderId === item.SenderId &&
+              obj.ReceiverId === item.ReceiverId
+          )
+        ) {
+          akumulator.push(item);
+        }
+        return akumulator;
+      }, []);
+
       res.status(200).json(privateMessages);
     } catch (error) {
       console.log(error);
