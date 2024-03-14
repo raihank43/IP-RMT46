@@ -7,6 +7,20 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
+  // const fetchProfileFromLoggedUser = async (username) => {
+  //   try {
+  //     const { data } = await axios({
+  //       url: `http://localhost:3000/profile/${username}`,
+  //       headers: {
+  //         Authorization: `Bearer ${localStorage.getItem("token")}`,
+  //       },
+  //     });
+  //     setFindProfile(data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
   const handleLoginSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -15,7 +29,21 @@ export default function Login() {
         method: "POST",
         data: { email, password },
       });
+
       localStorage.setItem("token", data.access_token);
+
+      const findProfile = await axios({
+        url: `http://localhost:3000/profile/${data.username}`,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      if(!findProfile.data) {
+        return navigate("/profile/create")
+      }
+      // fetchProfileFromLoggedUser(data.username);
+
       navigate("/");
     } catch (error) {
       console.log(error);

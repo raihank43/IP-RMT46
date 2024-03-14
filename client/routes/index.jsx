@@ -3,6 +3,8 @@ import { createBrowserRouter, redirect } from "react-router-dom";
 import Login from "../views/Login";
 import Home from "../views/Home";
 import DirectMessage from "../views/DirectMessage";
+import ProfileCreate from "../views/ProfileCreate";
+
 
 const router = createBrowserRouter([
   {
@@ -26,6 +28,14 @@ const router = createBrowserRouter([
       return !localStorage.getItem("token") ? redirect("/login") : null;
     },
   },
+  {
+    path: "/profile/create",
+    element: <ProfileCreate />,
+    loader: () => {
+      return !localStorage.getItem("token") ? redirect("/login") : null;
+    },
+
+  }
 ]);
 
 export default router;

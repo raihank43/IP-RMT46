@@ -6,7 +6,7 @@ import LogoutButton from "../src/components/Logout";
 
 export default function Home() {
   const [profile, setProfile] = useState("");
-  const nav = useNavigate()
+  const nav = useNavigate();
 
   const fetchProfiles = async () => {
     try {
@@ -21,11 +21,7 @@ export default function Home() {
       console.log(error);
     }
   };
-
-  const toDM = (username) => {
-    nav(`/${username}/message`)
-  }
-
+  
   useEffect(() => {
     fetchProfiles();
   }, []);
@@ -42,14 +38,14 @@ export default function Home() {
                     <div className="people-info">
                       <p className="people-name">{el.fullName}</p>
                       <p className="people-bio">{el.bio}</p>
-                      
-                      <Link onClick={toDM(el.username)}>Send Message</Link>
+
+                      <Link to={`/${el.username}/message`}>Send Message</Link>
                     </div>
                   </div>
                 );
               })
             : []}
-            <LogoutButton/>
+          <LogoutButton />
         </div>
 
         <div className="chat-body">
