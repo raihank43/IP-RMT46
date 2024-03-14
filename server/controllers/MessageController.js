@@ -56,7 +56,18 @@ module.exports = class MessageController {
         return akumulator;
       }, []);
 
-      res.status(200).json(privateMessages);
+      // message belongs to
+      let addBelongsTo = privateMessages.map((el) => {
+        if (el.SenderId == req.user.id) {
+          el.dataValues.messageBelongsToLoggedUser = true;
+          return el;
+        } else {
+          el.dataValues.messageBelongsToLoggedUser = false;
+          return el;
+        }
+      });
+
+      res.status(200).json(addBelongsTo);
     } catch (error) {
       console.log(error);
       next(error);

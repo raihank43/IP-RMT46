@@ -62,6 +62,7 @@ export default function DirectMessage() {
   useEffect(() => {
     socket.connect();
     socket.on("broadcastMessage", (newMessage) => {
+      // console.log(newMessage, "<<<< ini dari client");
       // setMessage((prevMessages) => [...prevMessages, newMessage]);
       fetchDirectMessages();
       // console.log(message, "<<<<< ini message")
@@ -71,7 +72,7 @@ export default function DirectMessage() {
 
     return () => {
       socket.disconnect();
-      socket.off("broadcastMessage")
+      socket.off("broadcastMessage");
     };
   }, [message]);
 
@@ -110,7 +111,17 @@ export default function DirectMessage() {
         <div className="chat-body">
           {message
             ? message.map((el, index) => {
-                return (
+                return el.messageBelongsToLoggedUser == true ? (
+                  <div className="chat-container chat-container-belongs-to-user">
+                    <div className="chat-container-header">
+                      <img src={el.Sender.Profile.profileImgUrl} alt="" />
+                      <div className="chat-container-message-body"></div>
+                      <h2>{el.Sender.username}</h2>
+                    </div>
+
+                    <p>{el.text}</p>
+                  </div>
+                ) : (
                   <div className="chat-container">
                     <div className="chat-container-header">
                       <img src={el.Sender.Profile.profileImgUrl} alt="" />

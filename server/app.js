@@ -31,9 +31,9 @@ app.use(errorHandler);
 io.on("connection", (socket) => {
   console.log({ status: `User Connected.` });
 
-  socket.on("userConnected", (data) => {
-    console.log(data, "<<<< ini keterima diserver");
-  });
+  // socket.on("userConnected", (data) => {
+  //   console.log(data, "<<<< ini keterima diserver");
+  // });
 
   // socket.on("chat message", (msg) => {
   //   console.log("message: " + msg);
@@ -41,7 +41,7 @@ io.on("connection", (socket) => {
   // });
 
   socket.on("sendMessage", (data) => {
-    console.log(data, "<<<< ini keterima diserver 1");
+    // console.log(data, "<<<< ini keterima diserver 1");
 
     io.emit("broadcastMessage", data)
   });
