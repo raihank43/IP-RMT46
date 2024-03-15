@@ -10,10 +10,12 @@ router.post("/login", UserController.Login);
 router.post("/google-login", UserController.googleLogin)
 
 router.use(authentication);
+router.get("/user/find", UserController.findCurrentlyLoggedUser)
 router.get("/", HomeController.Home);
 router.use("/profile", require("./profile"));
 
 router.get("/:username/message", MessageController.getDirectMessages);
 router.post("/:username/message", MessageController.sendDirectMessage);
+
 
 module.exports = router;

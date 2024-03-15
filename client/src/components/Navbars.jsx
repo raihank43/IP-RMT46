@@ -1,6 +1,40 @@
+import { Link } from "react-router-dom";
 import LogoutButton from "./Logout";
+import { useEffect, useState } from "react";
+import axios from "../../utils/axios";
+import DropdownMenu from "./DropDownMenu";
+
 
 export default function Navbar() {
+  const [loggedProfile, setLoggedProfile] = useState("");
+  const [loading, setLoading] = useState(false)
+
+  const fetchLoggedProfile = async () => {
+    try {
+      setLoading("loading....")
+      const { data } = await axios({
+        url: "/user/find",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      setLoggedProfile(data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false)
+    }
+  };
+
+  useEffect(() => {
+    fetchLoggedProfile();
+    setLoading
+  }, []);
+
+  if (loading) {
+    return <h1>Loading....</h1>;
+  }
+
   return (
     <nav className="bg-gray-800 p-2 mt-0 w-full">
       {" "}
@@ -14,7 +48,7 @@ export default function Navbar() {
             👻{" "}
             <span className="text-2xl pl-2">
               <i className="em em-grinning" />
-              KoneksiON
+              <Link to={"/"}>KoneksiON</Link>
             </span>
           </a>
         </div>
@@ -28,6 +62,7 @@ export default function Navbar() {
                 Active
               </a>
             </li>
+        
             <li className="mr-3">
               <a
                 className="inline-block text-gray-600 no-underline hover:text-gray-200 hover:text-underline py-2 px-4"
@@ -35,19 +70,14 @@ export default function Navbar() {
               >
                 link
               </a>
-            </li>
-            <li className="mr-3">
-              <a
-                className="inline-block text-gray-600 no-underline hover:text-gray-200 hover:text-underline py-2 px-4"
-                href="#"
-              >
-                link
-              </a>
-            </li>
-            <li className="mr-3">
-             <LogoutButton />
             </li>
           </ul>
+
+          <DropdownMenu loggedProfile={loggedProfile} />
+
+          <li className="mr-3">
+            <LogoutButton />
+          </li>
         </div>
       </div>
     </nav>

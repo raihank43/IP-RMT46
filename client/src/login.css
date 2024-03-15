@@ -1,3 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
 /* CSS HEX */
 :root {
   --rich-black: #0d1821ff;
@@ -54,6 +59,7 @@
   margin-top: 10px;
   margin-bottom: 20px;
 }
+
 
 .login-body > form {
   margin-left: 10px;

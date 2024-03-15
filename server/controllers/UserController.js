@@ -54,7 +54,9 @@ module.exports = class UserController {
         id: user.id,
       });
 
-      res.status(200).json({ access_token: token, id: user.id, username: user.username });
+      res
+        .status(200)
+        .json({ access_token: token, id: user.id, username: user.username });
     } catch (error) {
       console.log(error);
       next(error);
@@ -109,6 +111,25 @@ module.exports = class UserController {
     } catch (error) {
       console.log(error);
       next(error);
+    }
+  }
+
+  static async findCurrentlyLoggedUser(req, res, next) {
+    try {
+      const user = await User.findOne({
+        where: { id: req.user.id },
+        attributes: { exclude: ["password"] }, // Exclude password
+        include: [
+          {
+            model: Profile,
+            as: "Profile",
+          },
+        ],
+      });
+      res.status(200).json(user);
+    } catch (error) {
+      next(error);
+      console.log(error);
     }
   }
 };
