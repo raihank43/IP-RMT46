@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
-import "../src/home.css";
+// import "../src/home.css";
 import axios from "../utils/axios";
 import { Link, useParams } from "react-router-dom";
 import LogoutButton from "../src/components/Logout";
 import { socket } from "../src/socket"; // tambahkan ini di bagian atas file
+import toastMsgNotif from "../utils/toastMsgNotif";
+import Navbar from "../src/components/Navbars";
+import Sidebar from "../src/components/Sidebar";
+import IncomingMessage from "../src/components/IncomingMessage";
+import OutgoingMessage from "../src/components/OutgoingMessage";
 
 export default function DirectMessage() {
   const [profile, setProfile] = useState("");
@@ -43,7 +48,7 @@ export default function DirectMessage() {
   const handleSendMessage = async (event) => {
     event.preventDefault();
     try {
-      console.log(sendMessage);
+      // console.log(sendMessage);
       const { data } = await axios({
         url: `/${username}/message`,
         method: "POST",
@@ -52,18 +57,21 @@ export default function DirectMessage() {
         },
         data: { text: sendMessage },
       });
-      fetchDirectMessages();
-      socket.emit("sendMessage", data);
+      // fetchDirectMessages();
+      socket.emit("sendMessage", `From ${username}: ${data.text}`);
+      setSendMessage("")
     } catch (error) {
       console.log(error);
     }
   };
+
   // tambahkan ini di dalam fungsi DirectMessage
   useEffect(() => {
     socket.connect();
     socket.on("broadcastMessage", (newMessage) => {
       // console.log(newMessage, "<<<< ini dari client");
       // setMessage((prevMessages) => [...prevMessages, newMessage]);
+      toastMsgNotif(newMessage);
       fetchDirectMessages();
       // console.log(message, "<<<<< ini message")
     });
@@ -87,7 +95,65 @@ export default function DirectMessage() {
   // console.log(message)
   return (
     <>
-      <div className="homepage-container">
+      <Navbar />
+
+      <div className="flex h-screen overflow-hidden ">
+        {/* Sidebar */}
+        <Sidebar profile={profile ? profile : []} />
+
+        {/* Main Chat Area */}
+        <div className="flex-1 h-100vh">
+          {/* Chat Header */}
+          <header className="bg-white p-4 text-gray-700">
+            <h1 className="text-2xl font-semibold">Alice</h1>
+          </header>
+          {/* Chat Messages */}
+          <div className="h-screen max-h-[80vh] overflow-y-auto p-4 pb-36">
+            {message
+              ? message.map((el, index) => {
+                  return el.messageBelongsToLoggedUser == true ? (
+                    <OutgoingMessage
+                      key={index}
+                      profileImgUrl={el.Sender.Profile.profileImgUrl}
+                      fullName={el.Sender.username}
+                      text={el.text}
+                    />
+                  ) : (
+                    <IncomingMessage
+                      key={index}
+                      profileImgUrl={el.Sender.Profile.profileImgUrl}
+                      fullName={el.Sender.username}
+                      text={el.text}
+                    />
+                  );
+                })
+              : []}
+
+            {/* Incoming Message */}
+
+            {/* Outgoing Message */}
+          </div>
+          {/* Chat Input */}
+          <footer className="bg-white border-t border-gray-300 p-4 absolute bottom-0 w-3/4">
+            <div>
+              <form onSubmit={handleSendMessage} className="flex items-center">
+                <input
+                  type="text"
+                  placeholder="Type a message..."
+                  className="w-full p-2 rounded-md border border-gray-400 focus:outline-none focus:border-blue-500"
+                  value={sendMessage}
+                  onChange={(e) => setSendMessage(e.target.value)}
+                />
+                <button className="bg-indigo-500 text-white px-4 py-2 rounded-md ml-2">
+                  Send
+                </button>
+              </form>
+            </div>
+          </footer>
+        </div>
+      </div>
+
+      {/* <div className="homepage-container">
         <div className="profile-tabs">
           {profile
             ? profile.map((el, index) => {
@@ -109,31 +175,33 @@ export default function DirectMessage() {
         </div>
 
         <div className="chat-body">
-          {message
-            ? message.map((el, index) => {
-                return el.messageBelongsToLoggedUser == true ? (
-                  <div className="chat-container chat-container-belongs-to-user">
-                    <div className="chat-container-header">
-                      <img src={el.Sender.Profile.profileImgUrl} alt="" />
-                      <div className="chat-container-message-body"></div>
-                      <h2>{el.Sender.username}</h2>
-                    </div>
+          <div className="chats">
+            {message
+              ? message.map((el, index) => {
+                  return el.messageBelongsToLoggedUser == true ? (
+                    <div className="chat-container chat-container-belongs-to-user">
+                      <div className="chat-container-header">
+                        <img src={el.Sender.Profile.profileImgUrl} alt="" />
+                        <div className="chat-container-message-body"></div>
+                        <h2>{el.Sender.username}</h2>
+                      </div>
 
-                    <p>{el.text}</p>
-                  </div>
-                ) : (
-                  <div className="chat-container">
-                    <div className="chat-container-header">
-                      <img src={el.Sender.Profile.profileImgUrl} alt="" />
-                      <div className="chat-container-message-body"></div>
-                      <h2>{el.Sender.username}</h2>
+                      <p>{el.text}</p>
                     </div>
+                  ) : (
+                    <div className="chat-container">
+                      <div className="chat-container-header">
+                        <img src={el.Sender.Profile.profileImgUrl} alt="" />
+                        <div className="chat-container-message-body"></div>
+                        <h2>{el.Sender.username}</h2>
+                      </div>
 
-                    <p>{el.text}</p>
-                  </div>
-                );
-              })
-            : []}
+                      <p>{el.text}</p>
+                    </div>
+                  );
+                })
+              : []}
+          </div>
 
           <div className="message-form">
             <form action="" onSubmit={handleSendMessage}>
@@ -147,7 +215,7 @@ export default function DirectMessage() {
             </form>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }

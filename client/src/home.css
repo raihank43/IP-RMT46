@@ -23,7 +23,7 @@
   /* border: solid black; */
   height: 100vh;
   display: grid;
-  grid-template-columns: 0.2fr 1fr;
+  grid-template-columns: 0.4fr 1fr 0.25fr;
 }
 
 .profile-tabs {
@@ -33,23 +33,45 @@
 }
 
 .chat-body {
-  display: flex;
-  flex-direction: column;
-  justify-content: end;
-  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,82,121,1) 100%, rgba(0,212,255,1) 100%);  /* border: solid black; */
-  gap: 10px;
-  transition: all 0.3s; /* Transisi untuk efek hover */
-  
+  display: grid;
+  /* flex-direction: column;
+  justify-content: end; */
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
 }
 
 .chat-container {
   /* border: solid black; */
-  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,82,121,1) 100%, rgba(0,212,255,1) 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(9, 82, 121, 1) 100%,
+    rgba(0, 212, 255, 1) 100%
+  );
   margin-left: 20px;
+  /* margin-top: 20px; */
   border-radius: 20px;
   width: 50%;
   padding: 20px;
   background-color: var(--teal);
+}
+
+.chats {
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(
+    90deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(9, 82, 121, 1) 100%,
+    rgba(0, 212, 255, 1) 100%
+  ); /* border: solid black; */
+  gap: 20px;
+  transition: all 0.3s; /* Transisi untuk efek hover */
+  /* border: solid black; */
+  /* height: 85vh; */
+  overflow: auto;
+  /* border: solid white; */
+  max-height: 90vh;
 }
 
 .chat-container p {
@@ -68,23 +90,29 @@
   padding-bottom: 10px;
   padding-top: 10px;
   /* border: solid black; */
-
   margin-bottom: 20px;
+}
+
+.chat-container-header >h2 {
+  font-size: 20px;
 }
 
 .message-form > form {
   /* border: solid black; */
-  background-color: var(--gunmetal);
   padding: 20px;
+  height: 10vh;
+  background-color: var(--gunmetal);
   display: grid;
   grid-template-columns: 3fr 1fr;
   gap: 20px;
+
 }
 .message-form > form > button {
   /* color: black; */
   border: none;
   font-weight: bold;
   border-radius: 20px;
+  /* margin: 20px; */
   transition: all 0.3s ease;
 }
 
@@ -94,14 +122,16 @@
 }
 
 .message-form > form > textarea {
+  /* margin: 20px; */
   border: none;
   border-radius: 30px;
-  padding: 25px;
-  
+  padding: 10px;
+  overflow: hidden;
 }
 
 .profile-tabs {
   gap: 20px;
+  overflow: auto;
 }
 
 .peoples {
@@ -138,3 +168,19 @@
   align-self: end;
 }
 
+/* Styling untuk scrollbar */
+::-webkit-scrollbar {
+  width: 10px; /* Lebar scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: #000000; /* Warna track scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--space-cadet); /* Warna thumb scrollbar */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Warna thumb scrollbar saat di-hover */
+}

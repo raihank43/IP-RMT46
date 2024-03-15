@@ -7,10 +7,11 @@ export default function LogoutButton() {
     nav("/login");
   };
   return (
-    // <div className="logout-button">
-    <button className="logout-button" onClick={handleLogout}>
+    <button
+      onClick={handleLogout}
+      class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+    >
       Logout
     </button>
-    // </div>
   );
 }
