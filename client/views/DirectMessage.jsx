@@ -11,13 +11,13 @@ import IncomingMessage from "../src/components/IncomingMessage";
 import OutgoingMessage from "../src/components/OutgoingMessage";
 
 export default function DirectMessage() {
-  const [profile, setProfile] = useState("");
+  const [receiverUsername, setReceiverUsername] = useState("");
   const [message, setMessage] = useState("");
   const [sendMessage, setSendMessage] = useState("");
 
   const { username } = useParams();
 
-  const fetchProfiles = async () => {
+  const findProfiles = async () => {
     try {
       const { data } = await axios({
         url: "/profile",
@@ -25,7 +25,10 @@ export default function DirectMessage() {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      setProfile(data);
+
+      const findUsername = data.find((el) => el.User.username === username)
+        ?.User.username;
+      setReceiverUsername(findUsername);
     } catch (error) {
       console.log(error);
     }
@@ -59,7 +62,7 @@ export default function DirectMessage() {
       });
       // fetchDirectMessages();
       socket.emit("sendMessage", `From ${username}: ${data.text}`);
-      setSendMessage("")
+      setSendMessage("");
     } catch (error) {
       console.log(error);
     }
@@ -85,27 +88,26 @@ export default function DirectMessage() {
   }, [message]);
 
   useEffect(() => {
-    fetchProfiles();
-  }, []);
+    findProfiles();
+  }, [username]);
 
   useEffect(() => {
     fetchDirectMessages();
   }, [username]);
 
-  // console.log(message)
   return (
     <>
       <Navbar />
 
       <div className="flex h-screen overflow-hidden ">
         {/* Sidebar */}
-        <Sidebar profile={profile ? profile : []} />
+        <Sidebar />
 
         {/* Main Chat Area */}
         <div className="flex-1 h-100vh">
           {/* Chat Header */}
           <header className="bg-white p-4 text-gray-700">
-            <h1 className="text-2xl font-semibold">Alice</h1>
+            <h1 className="text-2xl font-semibold">{receiverUsername}</h1>
           </header>
           {/* Chat Messages */}
           <div className="h-screen max-h-[80vh] overflow-y-auto p-4 pb-36">

@@ -1,6 +1,27 @@
+import { useEffect, useState } from "react";
+import axios from "../../utils/axios";
 import Profile from "./Profile";
+export default function Sidebar() {
+  let [profile, setProfile] = useState("");
 
-export default function Sidebar({ profile }) {
+  const fetchProfiles = async () => {
+    try {
+      const { data } = await axios({
+        url: "/profile",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      setProfile(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchProfiles();
+  }, []);
+  
 
   return (
     <div className="w-1/4 bg-white border-r border-gray-300">
@@ -47,7 +68,7 @@ export default function Sidebar({ profile }) {
         </div>
       </header>
       {/* Contact List */}
-      <div className="overflow-y-auto h-screen p-3 mb-9 pb-20">
+      <div className="overflow-y-auto max-h-[80vh] h-screen p-3 mb-9 pb-20">
         {profile
           ? profile.map((el, index) => {
               return (

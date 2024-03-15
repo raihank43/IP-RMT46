@@ -135,4 +135,12 @@ module.exports = class ProfileController {
       next(error);
     }
   }
+
+  static async getCurrentLoggedProfile(req, res, next) {
+    try {
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  }
 };
