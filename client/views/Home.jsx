@@ -6,36 +6,38 @@ import LogoutButton from "../src/components/Logout";
 import Profile from "../src/components/Profile";
 import Navbar from "../src/components/Navbars";
 import Sidebar from "../src/components/Sidebar";
+import IncomingMessage from "../src/components/IncomingMessage";
+import OutgoingMessage from "../src/components/OutgoingMessage";
 
 export default function Home() {
-  const [profile, setProfile] = useState("");
-  const nav = useNavigate();
+  const [publicMessage, setPublicMessage] = useState("");
 
-  const fetchProfiles = async () => {
+  const fetchPublicMessage = async () => {
     try {
       const { data } = await axios({
-        url: "/profile",
+        url: "/group",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      setProfile(data);
+      setPublicMessage(data);
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    fetchProfiles();
+    fetchPublicMessage();
   }, []);
+
+  console.log(publicMessage);
 
   return (
     <>
-
       <div className="flex h-screen overflow-hidden">
         {/* Sidebar */}
-        <Sidebar profile={profile ? profile : []} />
-  
+        <Sidebar />
+
         {/* Main Chat Area */}
         <div className="flex-1">
           {/* Chat Header */}
@@ -43,36 +45,28 @@ export default function Home() {
             <h1 className="text-2xl font-semibold">#public</h1>
           </header>
           {/* Chat Messages */}
-          <div className="h-screen overflow-y-auto p-4 pb-36">
+          <div className="h-screen max-h-[80vh] overflow-y-auto p-4 pb-36">
             {/* Incoming Message */}
-            <div className="flex mb-4 cursor-pointer">
-              <div className="w-9 h-9 rounded-full flex items-center justify-center mr-2">
-                <img
-                  src="https://placehold.co/200x/ffa8e4/ffffff.svg?text=ʕ•́ᴥ•̀ʔ&font=Lato"
-                  alt="User Avatar"
-                  className="w-8 h-8 rounded-full"
-                />
-              </div>
-              <div className="flex max-w-96 bg-white rounded-lg p-3 gap-3">
-                <p className="text-gray-700">Hey Bob, how's it going?</p>
-              </div>
-            </div>
-            {/* Outgoing Message */}
-            <div className="flex justify-end mb-4 cursor-pointer">
-              <div className="flex max-w-96 bg-indigo-500 text-white rounded-lg p-3 gap-3">
-                <p>
-                  Hi Alice! I'm good, just finished a great book. How about you?
-                </p>
-              </div>
-              <div className="w-9 h-9 rounded-full flex items-center justify-center ml-2">
-                <img
-                  src="https://placehold.co/200x/b7a8ff/ffffff.svg?text=ʕ•́ᴥ•̀ʔ&font=Lato"
-                  alt="My Avatar"
-                  className="w-8 h-8 rounded-full"
-                />
-              </div>
-            </div>
-
+            {publicMessage
+              ? publicMessage.map((el, index) => {
+                  return el.messageBelongsToLoggedUser == true ? (
+                    <OutgoingMessage
+                      key={index}
+                      profileImgUrl={el.User.Profile.profileImgUrl}
+                      fullName={el.User.username}
+                      text={el.text}
+                      id={el.id}
+                    />
+                  ) : (
+                    <IncomingMessage
+                      key={index}
+                      profileImgUrl={el.User.Profile.profileImgUrl}
+                      fullName={el.User.username}
+                      text={el.text}
+                    />
+                  );
+                })
+              : []}
           </div>
           {/* Chat Input */}
           <footer className="bg-white border-t border-gray-300 p-4 absolute bottom-0 w-3/4 border-solid">

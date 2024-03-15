@@ -23,4 +23,6 @@ router.delete(
   MessageController.deleteDirectMessage
 );
 
+router.use("/group", require("./group"));
+
 module.exports = router;
