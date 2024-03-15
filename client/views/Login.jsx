@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import "../src/login.css";
 import axios from "../utils/axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import toastFailed from "../utils/toastFailed";
+import showToastSuccess from "../utils/toastSucces";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -39,14 +41,16 @@ export default function Login() {
         },
       });
 
-      if(!findProfile.data) {
-        return navigate("/profile/create")
+      if (!findProfile.data) {
+        showToastSuccess("Success Login, Welcome to KoneksiON!");
+        return navigate("/profile/create");
       }
       // fetchProfileFromLoggedUser(data.username);
-
+      showToastSuccess("Success Login, Welcome to KoneksiON!");
       navigate("/");
     } catch (error) {
       console.log(error);
+      toastFailed(error.response?.data?.message || error.message, "error");
     }
   };
 
@@ -60,6 +64,7 @@ export default function Login() {
     console.log(data);
     // simpan token di localStorage
     localStorage.setItem("token", data.access_token);
+    showToastSuccess("Success Login, Welcome to KoneksiON!");
     navigate("/");
   };
   // google OAuth
@@ -115,11 +120,12 @@ export default function Login() {
               </form>
             </div>
             <div className="login-footer">
+              <p>
+                Belum punya akun? Silahkan{" "}
+                <Link to={"/register"}>Buat Akun.</Link>
+              </p>
               <div className="OR">- OR -</div>
               <div id="buttonDiv"></div>
-              <p>
-                Belum punya akun? Silahkan <a href="">Register.</a>
-              </p>
             </div>
           </div>
         </div>

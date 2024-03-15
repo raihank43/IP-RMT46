@@ -4,9 +4,13 @@ import Login from "../views/Login";
 import Home from "../views/Home";
 import DirectMessage from "../views/DirectMessage";
 import ProfileCreate from "../views/ProfileCreate";
-
+import Register from "../views/Register";
 
 const router = createBrowserRouter([
+  {
+    path: "/register",
+    element: <Register />,
+  },
   {
     path: "/login",
     element: <Login />,
@@ -34,8 +38,7 @@ const router = createBrowserRouter([
     loader: () => {
       return !localStorage.getItem("token") ? redirect("/login") : null;
     },
-
-  }
+  },
 ]);
 
 export default router;
