@@ -56,6 +56,7 @@ export default function Home() {
                       fullName={el.User.username}
                       text={el.text}
                       id={el.id}
+                      createdAt={el.createdAt}
                     />
                   ) : (
                     <IncomingMessage
@@ -63,6 +64,7 @@ export default function Home() {
                       profileImgUrl={el.User.Profile.profileImgUrl}
                       fullName={el.User.username}
                       text={el.text}
+                      createdAt={el.createdAt}
                     />
                   );
                 })

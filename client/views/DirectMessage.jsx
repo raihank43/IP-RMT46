@@ -143,6 +143,7 @@ export default function DirectMessage() {
                       text={el.text}
                       id={el.id}
                       onDeleteMessage={onDeleteMessage}
+                      createdAt={el.createdAt}
                     />
                   ) : (
                     <IncomingMessage
@@ -150,6 +151,7 @@ export default function DirectMessage() {
                       profileImgUrl={el.Sender.Profile.profileImgUrl}
                       fullName={el.Sender.username}
                       text={el.text}
+                      createdAt={el.createdAt}
                     />
                   );
                 })
