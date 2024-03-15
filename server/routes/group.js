@@ -4,6 +4,7 @@ const router = express.Router();
 
 
 router.get("/", GroupController.getAllPublicGroupMessage)
+router.post("/", GroupController.sendMessageToPublicGroup)
 
 
 

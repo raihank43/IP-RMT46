@@ -8,9 +8,12 @@ import Navbar from "../src/components/Navbars";
 import Sidebar from "../src/components/Sidebar";
 import IncomingMessage from "../src/components/IncomingMessage";
 import OutgoingMessage from "../src/components/OutgoingMessage";
+import { socket } from "../src/socket";
+import toastMsgNotif from "../utils/toastMsgNotif";
 
 export default function Home() {
   const [publicMessage, setPublicMessage] = useState("");
+  const [sendPubMessage, setSendPubMessage] = useState("");
 
   const fetchPublicMessage = async () => {
     try {
@@ -26,12 +29,47 @@ export default function Home() {
     }
   };
 
+  const handleSendMessage = async (event) => {
+    event.preventDefault();
+    try {
+      // console.log(sendMessage);
+      const { data } = await axios({
+        url: `/group`,
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        data: { text: sendPubMessage },
+      });
+      // fetchDirectMessages();
+      socket.emit("sendMessage", `${data.text}`);
+      setSendPubMessage("");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    socket.connect();
+    socket.on("broadcastMessage", (newMessage) => {
+      // console.log(newMessage, "<<<< ini dari client");
+      // setMessage((prevMessages) => [...prevMessages, newMessage]);
+      toastMsgNotif(newMessage);
+      fetchPublicMessage();
+      // console.log(message, "<<<<< ini message")
+    });
+
+    // socket.emit("sendMessage", message)
+
+    return () => {
+      socket.disconnect();
+      socket.off("broadcastMessage");
+    };
+  }, [publicMessage]);
+
   useEffect(() => {
     fetchPublicMessage();
   }, []);
-
-  console.log(publicMessage);
-
   return (
     <>
       <div className="flex h-screen overflow-hidden">
@@ -72,15 +110,19 @@ export default function Home() {
           </div>
           {/* Chat Input */}
           <footer className="bg-white border-t border-gray-300 p-4 absolute bottom-0 w-3/4 border-solid">
-            <div className="flex items-center">
-              <input
-                type="text"
-                placeholder="Type a message..."
-                className="w-full p-2 rounded-md border border-gray-400 focus:outline-none focus:border-blue-500"
-              />
-              <button className="bg-indigo-500 text-white px-4 py-2 rounded-md ml-2">
-                Send
-              </button>
+            <div>
+              <form onSubmit={handleSendMessage} className="flex items-center">
+                <input
+                  type="text"
+                  placeholder="Type a message..."
+                  value={sendPubMessage}
+                  onChange={(e) => setSendPubMessage(e.target.value)}
+                  className="w-full p-2 rounded-md border border-gray-400 focus:outline-none focus:border-blue-500"
+                />
+                <button className="bg-indigo-500 text-white px-4 py-2 rounded-md ml-2">
+                  Send
+                </button>
+              </form>
             </div>
           </footer>
         </div>

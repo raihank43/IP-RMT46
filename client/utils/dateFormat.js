@@ -13,6 +13,6 @@ export default function formatDate(dateString) {
   let formattedTime = `${hours}:${minutes}`;
 
 //   return { date: formattedDate, time: formattedTime };
-let newFormatDate = `${hours}:${minutes} : ${year}-${month}-${day}`;
+let newFormatDate = `${year}-${month}-${day} | ${hours}:${minutes}`;
 return newFormatDate
 }

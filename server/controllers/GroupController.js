@@ -16,7 +16,7 @@ module.exports = class GroupController {
       });
 
       const addBelongsTo = data.map((el) => {
-        if (el.SenderId == req.user.id) {
+        if (el.UserId == req.user.id) {
           el.dataValues.messageBelongsToLoggedUser = true;
           return el;
         } else {
@@ -26,6 +26,30 @@ module.exports = class GroupController {
       });
 
       res.status(200).json(addBelongsTo);
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  }
+
+  static async sendMessageToPublicGroup(req, res, next) {
+    try {
+      const { text } = req.body;
+      if (!text) {
+        throw {
+          name: "CustomError",
+          status: 400,
+          message: "Message is required.",
+        };
+      }
+
+      const sendMessage = await GroupMessage.create({
+        UserId: req.user.id,
+        GroupId: 1,
+        text,
+      });
+
+      res.status(201).json(sendMessage);
     } catch (error) {
       console.log(error);
       next(error);
