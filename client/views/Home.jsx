@@ -31,7 +31,6 @@ export default function Home() {
 
   return (
     <>
-      <Navbar />
 
       <div className="flex h-screen overflow-hidden">
         {/* Sidebar */}

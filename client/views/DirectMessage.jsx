@@ -97,8 +97,6 @@ export default function DirectMessage() {
 
   return (
     <>
-      <Navbar />
-
       <div className="flex h-screen overflow-hidden ">
         {/* Sidebar */}
         <Sidebar />

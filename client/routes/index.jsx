@@ -5,6 +5,7 @@ import Home from "../views/Home";
 import DirectMessage from "../views/DirectMessage";
 import ProfileCreate from "../views/ProfileCreate";
 import Register from "../views/Register";
+import RootLayout from "../layouts/RootLayout";
 
 const router = createBrowserRouter([
   {
@@ -20,24 +21,24 @@ const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: <Home />,
+    element: <RootLayout />,
     loader: () => {
       return !localStorage.getItem("token") ? redirect("/login") : null;
     },
-  },
-  {
-    path: "/:username/message",
-    element: <DirectMessage />,
-    loader: () => {
-      return !localStorage.getItem("token") ? redirect("/login") : null;
-    },
-  },
-  {
-    path: "/profile/create",
-    element: <ProfileCreate />,
-    loader: () => {
-      return !localStorage.getItem("token") ? redirect("/login") : null;
-    },
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+      {
+        path: "/:username/message",
+        element: <DirectMessage />,
+      },
+      {
+        path: "/profile/create",
+        element: <ProfileCreate />,
+      },
+    ],
   },
 ]);
 
