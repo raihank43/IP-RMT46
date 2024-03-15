@@ -107,7 +107,7 @@ export default function DirectMessage() {
         <div className="flex-1 h-100vh">
           {/* Chat Header */}
           <header className="bg-white p-4 text-gray-700">
-            <h1 className="text-2xl font-semibold">{receiverUsername}</h1>
+            <h1 className="text-2xl font-semibold">@{receiverUsername}</h1>
           </header>
           {/* Chat Messages */}
           <div className="h-screen max-h-[80vh] overflow-y-auto p-4 pb-36">
