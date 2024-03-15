@@ -9,6 +9,7 @@ import Navbar from "../src/components/Navbars";
 import Sidebar from "../src/components/Sidebar";
 import IncomingMessage from "../src/components/IncomingMessage";
 import OutgoingMessage from "../src/components/OutgoingMessage";
+import showToastSuccess from "../utils/toastSucces";
 
 export default function DirectMessage() {
   const [receiverUsername, setReceiverUsername] = useState("");
@@ -68,6 +69,23 @@ export default function DirectMessage() {
     }
   };
 
+  const onDeleteMessage = async (id) => {
+    try {
+      await axios({
+        url: `/${id}/message`,
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      // const filteredData = message.filter((obj) => obj.id !== id);
+      socket.emit("deleteMessage", "Message Deleted Successfully");
+      showToastSuccess("Success deleted message.");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   // tambahkan ini di dalam fungsi DirectMessage
   useEffect(() => {
     socket.connect();
@@ -79,11 +97,17 @@ export default function DirectMessage() {
       // console.log(message, "<<<<< ini message")
     });
 
+    socket.on("broadcastDelete", (data) => {
+      // setMessage(data)
+      fetchDirectMessages();
+    });
+
     // socket.emit("sendMessage", message)
 
     return () => {
       socket.disconnect();
       socket.off("broadcastMessage");
+      socket.off("broadcastDelete");
     };
   }, [message]);
 
@@ -117,6 +141,8 @@ export default function DirectMessage() {
                       profileImgUrl={el.Sender.Profile.profileImgUrl}
                       fullName={el.Sender.username}
                       text={el.text}
+                      id={el.id}
+                      onDeleteMessage={onDeleteMessage}
                     />
                   ) : (
                     <IncomingMessage

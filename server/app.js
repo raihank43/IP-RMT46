@@ -43,12 +43,15 @@ io.on("connection", (socket) => {
   socket.on("sendMessage", (data) => {
     // console.log(data, "<<<< ini keterima diserver 1");
 
-    io.emit("broadcastMessage", data)
+    io.emit("broadcastMessage", data);
+  });
+
+  socket.on("deleteMessage", (data) => {
+    io.emit("broadcastDelete", data);
   });
 
   socket.on("disconnect", () => {
     console.log("user disconnected");
-
   });
 });
 

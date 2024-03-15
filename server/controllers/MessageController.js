@@ -102,4 +102,19 @@ module.exports = class MessageController {
       next(error);
     }
   }
+
+  static async deleteDirectMessage(req, res, next) {
+    try {
+      const { id } = req.params;
+
+      const privMessage = await PrivateMessage.findByPk(id);
+
+      await privMessage.destroy(id);
+
+      res.status(200).json({ message: "Message succesfully deleted." });
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  }
 };
