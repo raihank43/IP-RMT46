@@ -8,6 +8,11 @@ const upload = multer({ storage: multer.memoryStorage() });
 router.get("/", ProfileController.getAllProfiles);
 router.get("/:username", ProfileController.getProfileByUsername);
 router.post("/", upload.single("image"), ProfileController.createProfile);
-router.put("/:username", profileAuthorization, ProfileController.updateProfile);
+router.put(
+  "/:username",
+  profileAuthorization,
+  upload.single("image"),
+  ProfileController.updateProfile
+);
 
 module.exports = router;

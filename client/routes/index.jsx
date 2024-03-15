@@ -6,6 +6,7 @@ import DirectMessage from "../views/DirectMessage";
 import ProfileCreate from "../views/ProfileCreate";
 import Register from "../views/Register";
 import RootLayout from "../layouts/RootLayout";
+import UpdateProfile from "../views/UpdateProfile";
 
 const router = createBrowserRouter([
   {
@@ -34,9 +35,22 @@ const router = createBrowserRouter([
         path: "/:username/message",
         element: <DirectMessage />,
       },
+    ],
+  },
+  {
+    path: "/profile",
+    element: <RootLayout />,
+    loader: () => {
+      return !localStorage.getItem("token") ? redirect("/login") : null;
+    },
+    children: [
       {
         path: "/profile/create",
         element: <ProfileCreate />,
+      },
+      {
+        path: "/profile/:username/update",
+        element: <UpdateProfile />,
       },
     ],
   },

@@ -104,6 +104,8 @@ module.exports = class ProfileController {
   static async updateProfile(req, res, next) {
     try {
       const { username } = req.params;
+      console.log(req.file);
+      console.log(req.body);
       const { fullName, profileImgUrl, bio } = req.body;
       const userProfile = await User.findOne({
         where: { username: username },
@@ -117,13 +119,37 @@ module.exports = class ProfileController {
         };
       }
 
+      if (req.file) {
+        const mimeType = req.file.mimetype;
+        const data = Buffer.from(req.file.buffer).toString("base64");
+        const dataURI = `data:${mimeType};base64,${data}`;
+        const result = await cloudinary.uploader.upload(dataURI, {
+          // options ada banyak
+          // - public_id -> untuk nama file
+          // - folder: -> untuk nama folder
+          public_id: req.file.originalname,
+        });
+
+        const updatedProfileWithImage = await Profile.update(
+          {
+            UserId: req.user.id,
+            fullName,
+            profileImgUrl: result.secure_url,
+            bio,
+          },
+          { where: { id: userProfile.Profile.id } }
+        );
+
+        return res
+          .status(200)
+          .json({ message: "Profile updated Succesfully." });
+      }
       //   console.log(userProfile.Profile.id);
 
       const updatedProfile = await Profile.update(
         {
           UserId: req.user.id,
           fullName,
-          profileImgUrl,
           bio,
         },
         { where: { id: userProfile.Profile.id } }
