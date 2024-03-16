@@ -8,12 +8,14 @@ import OutgoingMessage from "../src/components/OutgoingMessage";
 import { socket } from "../src/socket";
 import toastMsgNotif from "../utils/toastMsgNotif";
 import showToastSuccess from "../utils/toastSucces";
+import Loading from "../src/components/Loading";
 
 export default function Home() {
   const [file, setFile] = useState(null);
   const [publicMessage, setPublicMessage] = useState("");
   const [sendPubMessage, setSendPubMessage] = useState("");
   const [fileName, setFileName] = useState("Upload");
+  const [loading, setLoading] = useState(false);
 
   const fetchPublicMessage = async () => {
     try {
@@ -32,11 +34,16 @@ export default function Home() {
   const handleSendMessage = async (event) => {
     event.preventDefault();
     try {
+      if (file) {
+        setLoading("Loading....");
+      }
+
       const formData = new FormData();
 
       formData.append("image", file);
       formData.append("text", sendPubMessage);
 
+      // setLoading("Loading....");
       const response = await axios.post(`/group`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -50,6 +57,8 @@ export default function Home() {
       setSendPubMessage("");
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -103,6 +112,7 @@ export default function Home() {
   useEffect(() => {
     fetchPublicMessage();
   }, []);
+
   return (
     <>
       <div className="flex h-screen overflow-hidden">
@@ -121,16 +131,18 @@ export default function Home() {
             {publicMessage
               ? publicMessage.map((el, index) => {
                   return el.messageBelongsToLoggedUser == true ? (
-                    <OutgoingMessage
-                      key={index}
-                      profileImgUrl={el.User.Profile.profileImgUrl}
-                      fullName={el.User.username}
-                      text={el.text}
-                      id={el.id}
-                      createdAt={el.createdAt}
-                      imgUploadGroup={el.imgUploadGroup}
-                      onDeleteMessage={onDeleteMessage}
-                    />
+                    <>
+                      <OutgoingMessage
+                        key={index}
+                        profileImgUrl={el.User.Profile.profileImgUrl}
+                        fullName={el.User.username}
+                        text={el.text}
+                        id={el.id}
+                        createdAt={el.createdAt}
+                        imgUploadGroup={el.imgUploadGroup}
+                        onDeleteMessage={onDeleteMessage}
+                      />
+                    </>
                   ) : (
                     <IncomingMessage
                       key={index}
@@ -166,7 +178,7 @@ export default function Home() {
                   htmlFor="upload"
                   className="bg-blue-500 text-white px-4 py-2 rounded-md ml-2 cursor-pointer"
                 >
-                  {fileName}
+                  {loading ? <Loading /> : fileName}
                 </label>
                 <button
                   type="submit"
