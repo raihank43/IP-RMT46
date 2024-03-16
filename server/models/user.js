@@ -36,13 +36,13 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         unique: {
           args: true,
-          msg: "Email must be Unique.",
+          msg: "Username must be Unique.",
         },
         validate: {
           notEmpty: {
             msg: { msg: "Username is required." },
-            notNull: { msg: "Username is required." },
           },
+          notNull: { msg: "Username is required." },
         },
       },
       email: {
@@ -54,9 +54,14 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notEmpty: {
-            msg: { msg: "Email is required." },
-            notNull: { msg: "Email is required." },
-            isEmail: { args: true, msg: "Invalid email format." },
+            msg: "Email is required.",
+          },
+          notNull: {
+            msg: "Email is required.",
+          },
+          isEmail: {
+            args: true,
+            msg: "Invalid email format.",
           },
         },
       },
