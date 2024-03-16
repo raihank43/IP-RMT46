@@ -12,8 +12,10 @@ import { socket } from "../src/socket";
 import toastMsgNotif from "../utils/toastMsgNotif";
 
 export default function Home() {
+  const [file, setFile] = useState(null);
   const [publicMessage, setPublicMessage] = useState("");
   const [sendPubMessage, setSendPubMessage] = useState("");
+  const [fileName, setFileName] = useState("Upload");
 
   const fetchPublicMessage = async () => {
     try {
@@ -32,21 +34,38 @@ export default function Home() {
   const handleSendMessage = async (event) => {
     event.preventDefault();
     try {
-      // console.log(sendMessage);
-      const { data } = await axios({
-        url: `/group`,
-        method: "POST",
+      const formData = new FormData();
+
+      formData.append("image", file);
+      formData.append("text", sendPubMessage);
+
+      const response = await axios.post(`/group`, formData, {
         headers: {
+          "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        data: { text: sendPubMessage },
       });
+
+      setFileName("Upload");
+      // console.log(response.data);
       // fetchDirectMessages();
-      socket.emit("sendMessage", `${data.text}`);
+      // socket.emit("sendMessage", `${data.text}`);
+      socket.emit("sendMessage", `Message Sent.`);
       setSendPubMessage("");
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleFileUpload = (e) => {
+    setFile(e.target.files[0]);
+    setFileName(e.target.files[0] ? e.target.files[0].name : "Upload");
+  };
+
+  const clearFile = (event) => {
+    event.preventDefault()
+    setFile(null);
+    setFileName("Upload");
   };
 
   useEffect(() => {
@@ -95,6 +114,7 @@ export default function Home() {
                       text={el.text}
                       id={el.id}
                       createdAt={el.createdAt}
+                      imgUploadGroup={el.imgUploadGroup}
                     />
                   ) : (
                     <IncomingMessage
@@ -103,6 +123,7 @@ export default function Home() {
                       fullName={el.User.username}
                       text={el.text}
                       createdAt={el.createdAt}
+                      imgUploadGroup={el.imgUploadGroup}
                     />
                   );
                 })
@@ -119,9 +140,31 @@ export default function Home() {
                   onChange={(e) => setSendPubMessage(e.target.value)}
                   className="w-full p-2 rounded-md border border-gray-400 focus:outline-none focus:border-blue-500"
                 />
-                <button className="bg-indigo-500 text-white px-4 py-2 rounded-md ml-2">
+                <input
+                  type="file"
+                  id="upload"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={handleFileUpload}
+                />
+                <label
+                  htmlFor="upload"
+                  className="bg-blue-500 text-white px-4 py-2 rounded-md ml-2 cursor-pointer"
+                >
+                  {fileName}
+                </label>
+                <button type="submit" className="bg-indigo-500 text-white px-4 py-2 rounded-md ml-2">
                   Send
                 </button>
+                <button
+                  onClick={clearFile}
+                  className="bg-red-500 text-white px-4 py-2 rounded-md ml-2"
+                >
+                  Clear
+                </button>
+                {/* <button type="submit" className="bg-indigo-500 text-white px-4 py-2 rounded-md ml-2">
+                  Send
+                </button> */}
               </form>
             </div>
           </footer>

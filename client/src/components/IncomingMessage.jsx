@@ -5,6 +5,7 @@ export default function IncomingMessage({
   fullName,
   text,
   createdAt,
+  imgUploadGroup,
 }) {
   return (
     <div className="flex mb-4 cursor-pointer">
@@ -20,8 +21,15 @@ export default function IncomingMessage({
         {/* Tambahkan nama di sini */}
         <div className="bg-white text-gray-700 rounded-lg p-3 gap-3">
           <p className="break-all">{text}</p>
+          <img
+            src={imgUploadGroup ? imgUploadGroup : ""}
+            className="transition-all duration-500 ease-in-out transform hover:scale-110"
+            alt=""
+          />
         </div>
-        <div className="text-gray-500 text-xs mt-1 ml-2">{formatDate(createdAt)}</div>{" "}
+        <div className="text-gray-500 text-xs mt-1 ml-2">
+          {formatDate(createdAt)}
+        </div>{" "}
         {/* Tambahkan tanggal di sini */}
       </div>
     </div>
