@@ -187,6 +187,51 @@ describe("POST /login", () => {
   });
 });
 
+describe("GET /user", () => {
+  describe("Success", () => {
+    test("Should return status 200 and object of currently logged user", async () => {
+      let { status, body } = await request(app)
+        .get("/user")
+        .send(pre_inserted_dummy_account_01)
+        .set("Authorization", `Bearer ${access_token_user_1}`);
+
+      expect(status).toBe(200);
+      expect(body).toEqual(expect.any(Object));
+      expect(body).toHaveProperty("id", expect.any(Number));
+      expect(body).toHaveProperty("username", expect.any(String));
+      expect(body).toHaveProperty("email", expect.any(String));
+      expect(body).toHaveProperty("createdAt", expect.any(String));
+      expect(body).toHaveProperty("updatedAt", expect.any(String));
+      expect(body).toHaveProperty("Profile", expect.any(Object));
+      expect(body.Profile).toHaveProperty("id", expect.any(Number));
+      expect(body.Profile).toHaveProperty("UserId", expect.any(Number));
+      expect(body.Profile).toHaveProperty("fullName", expect.any(String));
+      expect(body.Profile).toHaveProperty("profileImgUrl", expect.any(String));
+      expect(body.Profile).toHaveProperty("bio", expect.any(String));
+      expect(body.Profile).toHaveProperty("createdAt", expect.any(String));
+      expect(body.Profile).toHaveProperty("updatedAt", expect.any(String));
+    });
+  });
+
+  describe("Failed", () => {
+    test("Should return status 401 unauthenticated when haven't logged in yet", async () => {
+      let { status, body } = await request(app).get("/user");
+
+      expect(status).toBe(401);
+      expect(body).toHaveProperty("message", "You're not authorized");
+    });
+
+    test("Should return status 401 unauthenticated when token is invalid", async () => {
+      let { status, body } = await request(app)
+        .get("/user")
+        .set("Authorization", `Bear ${access_token_user_1}`);
+
+      expect(status).toBe(401);
+      expect(body).toHaveProperty("message", "You're not authorized");
+    });
+  });
+});
+
 beforeAll(async () => {
   await queryInterface.bulkInsert("Users", [
     {
@@ -207,6 +252,17 @@ beforeAll(async () => {
 
   access_token_user_1 = signToken({ id: 1 });
   access_token_user_2 = signToken({ id: 2 });
+
+  await queryInterface.bulkInsert("Profiles", [
+    {
+      UserId: 1,
+      fullName: "Dummy Account",
+      profileImgUrl: "gimmy.com",
+      bio: "this is a dummy account",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+  ]);
 });
 
 afterAll(async () => {

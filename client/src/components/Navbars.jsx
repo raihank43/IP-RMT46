@@ -13,7 +13,7 @@ export default function Navbar() {
     try {
       setLoading("loading....")
       const { data } = await axios({
-        url: "/user/find",
+        url: "/user",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
