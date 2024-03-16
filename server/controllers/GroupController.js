@@ -87,31 +87,18 @@ module.exports = class GroupController {
     }
   }
 
-  static async uploadImage(req, res, next) {
+  static async deletePublicGroupMessage(req, res, next) {
     try {
-      console.log(req.body);
-      const imageBuffer = req.file.buffer;
-      const base64Image = imageBuffer.toString("base64");
+      const { id } = req.params;
 
-      const { data } = await axios.post(
-        "https://api.imgur.com/3/image",
-        {
-          image: base64Image,
-          type: "base64",
-        },
-        {
-          headers: {
-            Authorization: "Client-ID " + imgurClientId,
-          },
-        }
-      );
+      const pubMessage = await GroupMessage.findByPk(id);
 
-      console.log(data.data.link);
+      await pubMessage.destroy(id);
 
-      // const data = await response.json(); // Ubah respons menjadi JSON
-      // console.log(data); // Cetak data ke konsol
+      res.status(200).json({ message: "Message succesfully deleted." });
     } catch (error) {
       console.log(error);
+      next(error)
     }
   }
 };

@@ -2,14 +2,12 @@ import { useEffect, useState } from "react";
 // import "../src/home.css";
 import axios from "../utils/axios";
 import { Link, useNavigate } from "react-router-dom";
-import LogoutButton from "../src/components/Logout";
-import Profile from "../src/components/Profile";
-import Navbar from "../src/components/Navbars";
 import Sidebar from "../src/components/Sidebar";
 import IncomingMessage from "../src/components/IncomingMessage";
 import OutgoingMessage from "../src/components/OutgoingMessage";
 import { socket } from "../src/socket";
 import toastMsgNotif from "../utils/toastMsgNotif";
+import showToastSuccess from "../utils/toastSucces";
 
 export default function Home() {
   const [file, setFile] = useState(null);
@@ -47,11 +45,25 @@ export default function Home() {
       });
 
       setFileName("Upload");
-      // console.log(response.data);
-      // fetchDirectMessages();
-      // socket.emit("sendMessage", `${data.text}`);
       socket.emit("sendMessage", `Message Sent.`);
       setSendPubMessage("");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onDeleteMessage = async (id) => {
+    try {
+      await axios({
+        url: `/group/${id}`,
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      socket.emit("deleteMessage", "Message Deleted Successfully");
+      showToastSuccess("Success deleted message.");
     } catch (error) {
       console.log(error);
     }
@@ -63,7 +75,7 @@ export default function Home() {
   };
 
   const clearFile = (event) => {
-    event.preventDefault()
+    event.preventDefault();
     setFile(null);
     setFileName("Upload");
   };
@@ -71,18 +83,19 @@ export default function Home() {
   useEffect(() => {
     socket.connect();
     socket.on("broadcastMessage", (newMessage) => {
-      // console.log(newMessage, "<<<< ini dari client");
-      // setMessage((prevMessages) => [...prevMessages, newMessage]);
       toastMsgNotif(newMessage);
       fetchPublicMessage();
-      // console.log(message, "<<<<< ini message")
     });
 
-    // socket.emit("sendMessage", message)
+    socket.on("broadcastDelete", (data) => {
+      // setMessage(data)
+      fetchPublicMessage();
+    });
 
     return () => {
       socket.disconnect();
       socket.off("broadcastMessage");
+      socket.off("broadcastDelete");
     };
   }, [publicMessage]);
 
@@ -115,6 +128,7 @@ export default function Home() {
                       id={el.id}
                       createdAt={el.createdAt}
                       imgUploadGroup={el.imgUploadGroup}
+                      onDeleteMessage={onDeleteMessage}
                     />
                   ) : (
                     <IncomingMessage
@@ -153,7 +167,10 @@ export default function Home() {
                 >
                   {fileName}
                 </label>
-                <button type="submit" className="bg-indigo-500 text-white px-4 py-2 rounded-md ml-2">
+                <button
+                  type="submit"
+                  className="bg-indigo-500 text-white px-4 py-2 rounded-md ml-2"
+                >
                   Send
                 </button>
                 <button
