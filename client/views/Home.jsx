@@ -45,6 +45,7 @@ export default function Home() {
       });
 
       setFileName("Upload");
+      setFile(null);
       socket.emit("sendMessage", `Message Sent.`);
       setSendPubMessage("");
     } catch (error) {

@@ -21,7 +21,6 @@ export default function Sidebar() {
   useEffect(() => {
     fetchProfiles();
   }, []);
-  
 
   return (
     <div className="w-1/4 bg-white border-r border-gray-300">
