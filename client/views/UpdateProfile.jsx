@@ -2,8 +2,11 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "../utils/axios";
 import showToastSuccess from "../utils/toastSucces";
+import { useDispatch } from "react-redux";
+import { updateProfile } from "../src/features/DirectMessage/ProfileSlice";
 
 export default function UpdateProfile() {
+  const dispatch = useDispatch();
   const [file, setFile] = useState(null);
   const [bio, setBio] = useState("");
   const [fullName, setFullName] = useState("");
@@ -21,18 +24,7 @@ export default function UpdateProfile() {
     formData.append("bio", bio);
     formData.append("fullName", fullName);
 
-    try {
-      const response = await axios.put(`/profile/${username}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-      showToastSuccess("Profile updated succesfully.")
-      nav("/");
-    } catch (error) {
-      console.error(error);
-    }
+    dispatch(updateProfile(nav, formData, username));
   };
 
   return (

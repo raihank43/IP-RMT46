@@ -1,82 +1,43 @@
 import { useEffect, useState } from "react";
-// import "../src/home.css";
-import axios from "../utils/axios";
 import { Link, useNavigate } from "react-router-dom";
 import Sidebar from "../src/components/Sidebar";
 import IncomingMessage from "../src/components/IncomingMessage";
 import OutgoingMessage from "../src/components/OutgoingMessage";
 import { socket } from "../src/socket";
 import toastMsgNotif from "../utils/toastMsgNotif";
-import showToastSuccess from "../utils/toastSucces";
 import Loading from "../src/components/Loading";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  deleteMessageOnPub,
+  fetchPublicMessage,
+  sendPublicMessage,
+} from "../src/features/DirectMessage/PublicMessageSlice";
 
 export default function Home() {
+  const dispatch = useDispatch();
   const [file, setFile] = useState(null);
-  const [publicMessage, setPublicMessage] = useState("");
+  const publicMessage = useSelector((state) => state.pubMessage.pubMessageList);
   const [sendPubMessage, setSendPubMessage] = useState("");
   const [fileName, setFileName] = useState("Upload");
   const [loading, setLoading] = useState(false);
 
-  const fetchPublicMessage = async () => {
-    try {
-      const { data } = await axios({
-        url: "/group",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-      setPublicMessage(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const handleSendMessage = async (event) => {
     event.preventDefault();
-    try {
-      if (file) {
-        setLoading("Loading....");
+    setLoading("Loading....");
+    const response = dispatch(sendPublicMessage(file, sendPubMessage)).then(
+      () => {
+        if (response) {
+          setFileName("Upload");
+          setFile(null);
+          setSendPubMessage("");
+          setLoading(false);
+        }
       }
-
-      const formData = new FormData();
-
-      formData.append("image", file);
-      formData.append("text", sendPubMessage);
-
-      // setLoading("Loading....");
-      const response = await axios.post(`/group`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-
-      setFileName("Upload");
-      setFile(null);
-      socket.emit("sendMessage", `Message Sent.`);
-      setSendPubMessage("");
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
+    );
   };
 
   const onDeleteMessage = async (id) => {
-    try {
-      await axios({
-        url: `/group/${id}`,
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-
-      socket.emit("deleteMessage", "Message Deleted Successfully");
-      showToastSuccess("Success deleted message.");
-    } catch (error) {
-      console.log(error);
-    }
+    dispatch(deleteMessageOnPub(id));
   };
 
   const handleFileUpload = (e) => {
@@ -94,12 +55,12 @@ export default function Home() {
     socket.connect();
     socket.on("broadcastMessage", (newMessage) => {
       toastMsgNotif(newMessage);
-      fetchPublicMessage();
+      dispatch(fetchPublicMessage());
     });
 
     socket.on("broadcastDelete", (data) => {
       // setMessage(data)
-      fetchPublicMessage();
+      dispatch(fetchPublicMessage());
     });
 
     return () => {
@@ -110,7 +71,7 @@ export default function Home() {
   }, [publicMessage]);
 
   useEffect(() => {
-    fetchPublicMessage();
+    dispatch(fetchPublicMessage());
   }, []);
 
   return (
@@ -178,13 +139,13 @@ export default function Home() {
                   htmlFor="upload"
                   className="bg-blue-500 text-white px-4 py-2 rounded-md ml-2 cursor-pointer"
                 >
-                  {loading ? <Loading /> : fileName}
+                  {fileName}
                 </label>
                 <button
                   type="submit"
                   className="bg-indigo-500 text-white px-4 py-2 rounded-md ml-2"
                 >
-                  Send
+                  {loading ? <Loading /> : "Send"}
                 </button>
                 <button
                   onClick={clearFile}

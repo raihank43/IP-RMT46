@@ -1,25 +1,15 @@
 import { useEffect, useState } from "react";
 import axios from "../../utils/axios";
 import Profile from "./Profile";
-export default function Sidebar() {
-  let [profile, setProfile] = useState("");
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProfiles } from "../features/DirectMessage/ProfileSlice";
 
-  const fetchProfiles = async () => {
-    try {
-      const { data } = await axios({
-        url: "/profile",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-      setProfile(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+export default function Sidebar() {
+  const dispatch = useDispatch();
+  const profile = useSelector((state) => state.profileData.profileList);
 
   useEffect(() => {
-    fetchProfiles();
+    dispatch(fetchProfiles());
   }, []);
 
   return (

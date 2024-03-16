@@ -1,27 +1,31 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "../utils/axios";
-import showToastSuccess from "../utils/toastSucces";
+import { useDispatch, useSelector } from "react-redux";
+import { registerSubmit } from "../src/features/DirectMessage/RegisterSlice";
 
 export default function Register() {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
   const nav = useNavigate();
+
+  const [userData, setUserData] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+
+  const handleChangeInput = (event) => {
+    const key = event.target.name;
+    const value = event.target.value;
+
+    setUserData({
+      ...userData,
+      [key]: value,
+    });
+  };
 
   const handleRegisterSubmit = async (event) => {
     event.preventDefault();
-    try {
-      const { data } = await axios({
-        url: "/register",
-        method: "POST",
-        data: { username, email, password },
-      });
-      showToastSuccess("Register Success! Please Login.")
-      nav("/login");
-    } catch (error) {
-      console.log(error);
-    }
+    dispatch(registerSubmit(nav, userData));
   };
   return (
     <>
@@ -40,25 +44,25 @@ export default function Register() {
                   type="text"
                   required=""
                   name="username"
-                  value={username}
+                  value={userData.username}
                   placeholder="Enter your username"
-                  onChange={(event) => setUsername(event.target.value)}
+                  onChange={handleChangeInput}
                 />
                 <input
                   type="email"
                   required=""
                   name="email"
-                  value={email}
+                  value={userData.email}
                   placeholder="Enter your email"
-                  onChange={(event) => setEmail(event.target.value)}
+                  onChange={handleChangeInput}
                 />
                 {/* <label for="">Password</label> */}
                 <input
                   type="password"
                   required=""
                   name="password"
-                  value={password}
-                  onChange={(event) => setPassword(event.target.value)}
+                  value={userData.password}
+                  onChange={handleChangeInput}
                   placeholder="Enter your password"
                 />
                 <div className="login-button">

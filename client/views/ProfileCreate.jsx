@@ -1,37 +1,25 @@
 import { useEffect, useState } from "react";
 import axios from "../utils/axios";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { createProfile } from "../src/features/DirectMessage/ProfileSlice";
 
 export default function ProfileCreate() {
   const [file, setFile] = useState(null);
   const [bio, setBio] = useState("");
   const [fullName, setFullName] = useState("");
+  const dispatch = useDispatch();
 
   const nav = useNavigate();
 
   const handleOnUpload = async (event) => {
     event.preventDefault();
-
     const formData = new FormData();
-
     formData.append("image", file);
-    formData.append("name", "test");
+    // formData.append("name", "test");
     formData.append("bio", bio);
     formData.append("fullName", fullName);
-
-    try {
-      const response = await axios.post(`/profile`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-
-      console.log(response.data);
-      nav("/");
-    } catch (error) {
-      console.error(error);
-    }
+    dispatch(createProfile(nav, formData));
   };
 
   return (

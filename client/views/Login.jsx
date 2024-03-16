@@ -2,66 +2,43 @@ import { useEffect, useState } from "react";
 import "../src/login.css";
 import axios from "../utils/axios";
 import { Link, useNavigate } from "react-router-dom";
-import toastFailed from "../utils/toastFailed";
 import showToastSuccess from "../utils/toastSucces";
+import { useDispatch } from "react-redux";
+import { loginSubmit } from "../src/features/DirectMessage/LoginSlice";
+
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // const fetchProfileFromLoggedUser = async (username) => {
-  //   try {
-  //     const { data } = await axios({
-  //       url: `http://localhost:3000/profile/${username}`,
-  //       headers: {
-  //         Authorization: `Bearer ${localStorage.getItem("token")}`,
-  //       },
-  //     });
-  //     setFindProfile(data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const [loginData, setloginData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChangeInput = (event) => {
+    const key = event.target.name;
+    const value = event.target.value;
+
+    setloginData({
+      ...loginData,
+      [key]: value,
+    });
+  };
 
   const handleLoginSubmit = async (event) => {
     event.preventDefault();
-    try {
-      let { data } = await axios({
-        url: "/login",
-        method: "POST",
-        data: { email, password },
-      });
-
-      localStorage.setItem("token", data.access_token);
-
-      const findProfile = await axios({
-        url: `http://localhost:3000/profile/${data.username}`,
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-
-      if (!findProfile.data) {
-        showToastSuccess("Success Login, Welcome to KoneksiON!");
-        return navigate("/profile/create");
-      }
-      // fetchProfileFromLoggedUser(data.username);
-      showToastSuccess("Success Login, Welcome to KoneksiON!");
-      navigate("/");
-    } catch (error) {
-      console.log(error);
-      toastFailed(error.response?.data?.message || error.message, "error");
-    }
+    dispatch(loginSubmit(loginData, navigate));
   };
 
   //integration OAuth Login
   const handleCredentialResponse = async ({ credential }) => {
-    console.log("Encoded JWT ID token: " + credential);
+    // console.log("Encoded JWT ID token: " + credential);
     const { data } = await axios.post("/google-login", {
       googleToken: credential,
     });
 
-    console.log(data);
     // simpan token di localStorage
     localStorage.setItem("token", data.access_token);
     showToastSuccess("Success Login, Welcome to KoneksiON!");
@@ -101,17 +78,17 @@ export default function Login() {
                   type="email"
                   required=""
                   name="email"
-                  value={email}
+                  value={loginData.email}
                   placeholder="Enter your email"
-                  onChange={(event) => setEmail(event.target.value)}
+                  onChange={handleChangeInput}
                 />
                 {/* <label for="">Password</label> */}
                 <input
                   type="password"
                   required=""
                   name="password"
-                  value={password}
-                  onChange={(event) => setPassword(event.target.value)}
+                  value={loginData.password}
+                  onChange={handleChangeInput}
                   placeholder="Enter your password"
                 />
                 <div className="login-button">

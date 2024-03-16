@@ -1,89 +1,39 @@
 import { useEffect, useState } from "react";
-// import "../src/home.css";
 import axios from "../utils/axios";
 import { Link, useParams } from "react-router-dom";
-import LogoutButton from "../src/components/Logout";
 import { socket } from "../src/socket"; // tambahkan ini di bagian atas file
 import toastMsgNotif from "../utils/toastMsgNotif";
-import Navbar from "../src/components/Navbars";
 import Sidebar from "../src/components/Sidebar";
 import IncomingMessage from "../src/components/IncomingMessage";
 import OutgoingMessage from "../src/components/OutgoingMessage";
 import showToastSuccess from "../utils/toastSucces";
 
+import { useDispatch, useSelector } from "react-redux";
+import {
+  deletePrivMessageById,
+  fetchDirectMessages,
+  sendPrivMessage,
+  setMessage,
+} from "../src/features/DirectMessage/DirectMessageSlice";
+import { findProfiles } from "../src/features/DirectMessage/FindUsernameByProfileSlice";
+
 export default function DirectMessage() {
-  const [receiverUsername, setReceiverUsername] = useState("");
-  const [message, setMessage] = useState("");
+  // const [, setReceiverUsername] = useState("");
+  // const [, setMessage] = useState([]);
+  const dispatch = useDispatch();
+  const message = useSelector((state) => state.directMessages.allPrivMessage);
+  const receiverUsername = useSelector((state) => state.receiver.username);
   const [sendMessage, setSendMessage] = useState("");
-
   const { username } = useParams();
-
-  const findProfiles = async () => {
-    try {
-      const { data } = await axios({
-        url: "/profile",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-
-      const findUsername = data.find((el) => el.User.username === username)
-        ?.User.username;
-      setReceiverUsername(findUsername);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const fetchDirectMessages = async () => {
-    try {
-      const { data } = await axios({
-        url: `/${username}/message`,
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-      setMessage(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const handleSendMessage = async (event) => {
     event.preventDefault();
-    try {
-      // console.log(sendMessage);
-      const { data } = await axios({
-        url: `/${username}/message`,
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        data: { text: sendMessage },
-      });
-      // fetchDirectMessages();
-      socket.emit("sendMessage", `From ${username}: ${data.text}`);
-      setSendMessage("");
-    } catch (error) {
-      console.log(error);
-    }
+    dispatch(sendPrivMessage(username, sendMessage));
+    setSendMessage("");
   };
 
-  const onDeleteMessage = async (id) => {
-    try {
-      await axios({
-        url: `/${id}/message`,
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-      // const filteredData = message.filter((obj) => obj.id !== id);
-      socket.emit("deleteMessage", "Message Deleted Successfully");
-      showToastSuccess("Success deleted message.");
-    } catch (error) {
-      console.log(error);
-    }
+  const onDeleteMessage = (id) => {
+    dispatch(deletePrivMessageById(id));
   };
 
   // tambahkan ini di dalam fungsi DirectMessage
@@ -93,13 +43,13 @@ export default function DirectMessage() {
       // console.log(newMessage, "<<<< ini dari client");
       // setMessage((prevMessages) => [...prevMessages, newMessage]);
       toastMsgNotif(newMessage);
-      fetchDirectMessages();
+      dispatch(fetchDirectMessages(username));
       // console.log(message, "<<<<< ini message")
     });
 
     socket.on("broadcastDelete", (data) => {
       // setMessage(data)
-      fetchDirectMessages();
+      dispatch(fetchDirectMessages(username));
     });
 
     // socket.emit("sendMessage", message)
@@ -112,11 +62,8 @@ export default function DirectMessage() {
   }, [message]);
 
   useEffect(() => {
-    findProfiles();
-  }, [username]);
-
-  useEffect(() => {
-    fetchDirectMessages();
+    dispatch(findProfiles(username));
+    dispatch(fetchDirectMessages(username)); //passing username karena butuh username untuk fetchdata
   }, [username]);
 
   return (
@@ -133,29 +80,27 @@ export default function DirectMessage() {
           </header>
           {/* Chat Messages */}
           <div className="h-screen max-h-[80vh] overflow-y-auto p-4 pb-36">
-            {message
-              ? message.map((el, index) => {
-                  return el.messageBelongsToLoggedUser == true ? (
-                    <OutgoingMessage
-                      key={index}
-                      profileImgUrl={el.Sender.Profile.profileImgUrl}
-                      fullName={el.Sender.username}
-                      text={el.text}
-                      id={el.id}
-                      onDeleteMessage={onDeleteMessage}
-                      createdAt={el.createdAt}
-                    />
-                  ) : (
-                    <IncomingMessage
-                      key={index}
-                      profileImgUrl={el.Sender.Profile.profileImgUrl}
-                      fullName={el.Sender.username}
-                      text={el.text}
-                      createdAt={el.createdAt}
-                    />
-                  );
-                })
-              : []}
+            {message.map((el, index) => {
+              return el.messageBelongsToLoggedUser == true ? (
+                <OutgoingMessage
+                  key={index}
+                  profileImgUrl={el.Sender.Profile.profileImgUrl}
+                  fullName={el.Sender.username}
+                  text={el.text}
+                  id={el.id}
+                  onDeleteMessage={onDeleteMessage}
+                  createdAt={el.createdAt}
+                />
+              ) : (
+                <IncomingMessage
+                  key={index}
+                  profileImgUrl={el.Sender.Profile.profileImgUrl}
+                  fullName={el.Sender.username}
+                  text={el.text}
+                  createdAt={el.createdAt}
+                />
+              );
+            })}
 
             {/* Incoming Message */}
 
