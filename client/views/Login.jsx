@@ -4,7 +4,7 @@ import axios from "../utils/axios";
 import { Link, useNavigate } from "react-router-dom";
 import showToastSuccess from "../utils/toastSucces";
 import { useDispatch } from "react-redux";
-import { loginSubmit } from "../src/features/DirectMessage/LoginSlice";
+import { loginSubmit } from "../src/features/User/LoginSlice";
 
 export default function Login() {
   // const [email, setEmail] = useState("");

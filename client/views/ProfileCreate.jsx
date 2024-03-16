@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "../utils/axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { createProfile } from "../src/features/DirectMessage/ProfileSlice";
+import { createProfile } from "../src/features/Profile/ProfileSlice";
 
 export default function ProfileCreate() {
   const [file, setFile] = useState(null);

@@ -15,7 +15,7 @@ import {
   sendPrivMessage,
   setMessage,
 } from "../src/features/DirectMessage/DirectMessageSlice";
-import { findProfiles } from "../src/features/DirectMessage/FindUsernameByProfileSlice";
+import { findProfiles } from "../src/features/Profile/FindUsernameByProfileSlice";
 
 export default function DirectMessage() {
   // const [, setReceiverUsername] = useState("");

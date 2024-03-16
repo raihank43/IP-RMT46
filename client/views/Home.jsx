@@ -11,7 +11,7 @@ import {
   deleteMessageOnPub,
   fetchPublicMessage,
   sendPublicMessage,
-} from "../src/features/DirectMessage/PublicMessageSlice";
+} from "../src/features/PublicMessage/PublicMessageSlice";
 
 export default function Home() {
   const dispatch = useDispatch();

@@ -1,10 +1,10 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit";
 import directMessageReducer from "./features/DirectMessage/DirectMessageSlice";
-import findUsernameByProfileReducer from "./features/DirectMessage/FindUsernameByProfileSlice";
-import registerSliceReducer from "./features/DirectMessage/RegisterSlice";
-import loginSliceReducer from "./features/DirectMessage/LoginSlice";
-import PublicMessageReducer from "./features/DirectMessage/PublicMessageSlice";
-import ProfileReducer from "./features/DirectMessage/ProfileSlice";
+import findUsernameByProfileReducer from "./features/Profile/FindUsernameByProfileSlice";
+import registerSliceReducer from "./features/User/RegisterSlice";
+import loginSliceReducer from "./features/User/LoginSlice";
+import PublicMessageReducer from "./features/PublicMessage/PublicMessageSlice";
+import ProfileReducer from "./features/Profile/ProfileSlice";
 
 
 export const store = configureStore({

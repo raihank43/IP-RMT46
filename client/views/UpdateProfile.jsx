@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "../utils/axios";
 import showToastSuccess from "../utils/toastSucces";
 import { useDispatch } from "react-redux";
-import { updateProfile } from "../src/features/DirectMessage/ProfileSlice";
+import { updateProfile } from "../src/features/Profile/ProfileSlice";
 
 export default function UpdateProfile() {
   const dispatch = useDispatch();

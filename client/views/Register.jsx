@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { registerSubmit } from "../src/features/DirectMessage/RegisterSlice";
+import { registerSubmit } from "../src/features/User/RegisterSlice";
 
 export default function Register() {
   const dispatch = useDispatch();

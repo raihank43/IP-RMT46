@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "../../utils/axios";
 import Profile from "./Profile";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProfiles } from "../features/DirectMessage/ProfileSlice";
+import { fetchProfiles } from "../features/Profile/ProfileSlice";
 
 export default function Sidebar() {
   const dispatch = useDispatch();
