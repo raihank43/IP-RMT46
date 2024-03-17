@@ -5,7 +5,7 @@ export default function IncomingMessage({
   fullName,
   text,
   createdAt,
-  imgUploadGroup,
+  imgUpload,
 }) {
   return (
     <div className="flex mb-4 cursor-pointer">
@@ -22,7 +22,7 @@ export default function IncomingMessage({
         <div className="bg-white text-gray-700 rounded-lg p-3 gap-3">
           <p className="break-all">{text}</p>
           <img
-            src={imgUploadGroup ? imgUploadGroup : ""}
+            src={imgUpload ? imgUpload : ""}
             className="transition-all duration-500 ease-in-out transform hover:scale-110"
             alt=""
           />

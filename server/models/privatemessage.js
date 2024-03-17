@@ -47,6 +47,7 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: { msg: "Message is required." },
         },
       },
+      imgUploadPriv: DataTypes.STRING,
     },
     {
       sequelize,

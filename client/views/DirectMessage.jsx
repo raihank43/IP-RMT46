@@ -7,7 +7,6 @@ import Sidebar from "../src/components/Sidebar";
 import IncomingMessage from "../src/components/IncomingMessage";
 import OutgoingMessage from "../src/components/OutgoingMessage";
 import showToastSuccess from "../utils/toastSucces";
-
 import { useDispatch, useSelector } from "react-redux";
 import {
   deletePrivMessageById,
@@ -17,6 +16,7 @@ import {
 } from "../src/features/DirectMessage/DirectMessageSlice";
 import { findProfiles } from "../src/features/Profile/FindUsernameByProfileSlice";
 import { fetchLoggedProfile } from "../src/features/User/CurrentlyLoggedProfile";
+import Loading from "../src/components/Loading";
 
 export default function DirectMessage() {
   // const [, setReceiverUsername] = useState("");
@@ -25,6 +25,9 @@ export default function DirectMessage() {
   const message = useSelector((state) => state.directMessages.allPrivMessage);
   const receiverUsername = useSelector((state) => state.receiver.username);
   const [sendMessage, setSendMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [fileName, setFileName] = useState("Upload");
+  const [file, setFile] = useState(null);
   const { username } = useParams();
   const loggedProfile = useSelector(
     (state) => state.currentlyLoggedProfile.userDataLogin
@@ -41,14 +44,32 @@ export default function DirectMessage() {
 
   const handleSendMessage = async (event) => {
     event.preventDefault();
-    // fetchLoggedProfile();
-    // const sender = loggedProfile.Profile.fullName;
-    dispatch(sendPrivMessage(username, sendMessage, currentUser));
-    setSendMessage("");
+    setLoading("Loading....");
+    const response = dispatch(
+      sendPrivMessage(username, sendMessage, currentUser, file)
+    ).then(() => {
+      if (response) {
+        setFileName("Upload");
+        setFile(null);
+        setSendMessage("");
+        setLoading(false);
+      }
+    });
   };
 
   const onDeleteMessage = (id) => {
     dispatch(deletePrivMessageById(id));
+  };
+
+  const handleFileUpload = (e) => {
+    setFile(e.target.files[0]);
+    setFileName(e.target.files[0] ? e.target.files[0].name : "Upload");
+  };
+
+  const clearFile = (event) => {
+    event.preventDefault();
+    setFile(null);
+    setFileName("Upload");
   };
 
   // tambahkan ini di dalam fungsi DirectMessage
@@ -107,6 +128,7 @@ export default function DirectMessage() {
                   id={el.id}
                   onDeleteMessage={onDeleteMessage}
                   createdAt={el.createdAt}
+                  imgUpload={el.imgUploadPriv}
                 />
               ) : (
                 <IncomingMessage
@@ -115,6 +137,7 @@ export default function DirectMessage() {
                   fullName={el.Sender.username}
                   text={el.text}
                   createdAt={el.createdAt}
+                  imgUpload={el.imgUploadPriv}
                 />
               );
             })}
@@ -124,19 +147,44 @@ export default function DirectMessage() {
             {/* Outgoing Message */}
           </div>
           {/* Chat Input */}
-          <footer className="bg-white border-t border-gray-300 p-4 absolute bottom-0 w-3/4">
+          <footer className="bg-white border-t border-gray-300 p-4 absolute bottom-0 w-3/4 border-solid">
             <div>
               <form onSubmit={handleSendMessage} className="flex items-center">
                 <input
                   type="text"
                   placeholder="Type a message..."
-                  className="w-full p-2 rounded-md border border-gray-400 focus:outline-none focus:border-blue-500"
                   value={sendMessage}
                   onChange={(e) => setSendMessage(e.target.value)}
+                  className="w-full p-2 rounded-md border border-gray-400 focus:outline-none focus:border-blue-500"
                 />
-                <button className="bg-indigo-500 text-white px-4 py-2 rounded-md ml-2">
-                  Send
+                <input
+                  type="file"
+                  id="upload"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={handleFileUpload}
+                />
+                <label
+                  htmlFor="upload"
+                  className="bg-blue-500 text-white px-4 py-2 rounded-md ml-2 cursor-pointer"
+                >
+                  {fileName}
+                </label>
+                <button
+                  type="submit"
+                  className="bg-indigo-500 text-white px-4 py-2 rounded-md ml-2"
+                >
+                  {loading ? <Loading /> : "Send"}
                 </button>
+                <button
+                  onClick={clearFile}
+                  className="bg-red-500 text-white px-4 py-2 rounded-md ml-2"
+                >
+                  Clear
+                </button>
+                {/* <button type="submit" className="bg-indigo-500 text-white px-4 py-2 rounded-md ml-2">
+                  Send
+                </button> */}
               </form>
             </div>
           </footer>

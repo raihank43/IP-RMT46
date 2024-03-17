@@ -6,7 +6,7 @@ export default function OutgoingMessage({
   id,
   onDeleteMessage,
   createdAt,
-  imgUploadGroup,
+  imgUpload,
 }) {
   const handleDeleteMessage = (messageId) => {
     onDeleteMessage(messageId);
@@ -18,7 +18,7 @@ export default function OutgoingMessage({
         <div className="bg-indigo-500 text-white rounded-lg p-3 gap-3 relative">
           <p className="break-all">{text}</p>
           <img
-            src={imgUploadGroup ? imgUploadGroup : ""}
+            src={imgUpload ? imgUpload : ""}
             alt=""
             className="transition-all duration-500 ease-in-out transform hover:scale-110"
           />

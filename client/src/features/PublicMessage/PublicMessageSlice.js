@@ -48,7 +48,7 @@ export const sendPublicMessage = (file, sendPubMessage, sender) => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      console.log(response)
+      // console.log(response)
       socket.emit("sendMessage", {
         message: `From ${sender.currentUsername}: ${response.data.text}`,
         sender: sender.currentUsername,

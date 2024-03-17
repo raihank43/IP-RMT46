@@ -113,7 +113,7 @@ export default function Home() {
                         text={el.text}
                         id={el.id}
                         createdAt={el.createdAt}
-                        imgUploadGroup={el.imgUploadGroup}
+                        imgUpload={el.imgUploadGroup}
                         onDeleteMessage={onDeleteMessage}
                       />
                     </>
@@ -124,7 +124,7 @@ export default function Home() {
                       fullName={el.User.username}
                       text={el.text}
                       createdAt={el.createdAt}
-                      imgUploadGroup={el.imgUploadGroup}
+                      imgUpload={el.imgUploadGroup}
                     />
                   );
                 })

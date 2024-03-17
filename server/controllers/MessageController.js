@@ -1,5 +1,7 @@
 const { Op } = require("sequelize");
 const { PrivateMessage, GroupMessage, User, Profile } = require("../models");
+const axios = require("axios");
+const imgurClientId = process.env.imgurClientId;
 
 module.exports = class MessageController {
   static async getDirectMessages(req, res, next) {
@@ -78,7 +80,13 @@ module.exports = class MessageController {
     try {
       const { username } = req.params;
       const { text } = req.body;
-
+      if (!text) {
+        throw {
+          name: "CustomError",
+          status: 400,
+          message: "Message is required.",
+        };
+      }
       if (!username) {
         throw { name: "CustomError", status: 404, message: "User not Found." };
       }
@@ -88,6 +96,34 @@ module.exports = class MessageController {
       });
       if (!findReceivedUser) {
         throw { name: "CustomError", status: 404, message: "User not Found." };
+      }
+
+      if (req.file) {
+        const imageBuffer = req.file.buffer;
+        const base64Image = imageBuffer.toString("base64");
+
+        const { data } = await axios.post(
+          "https://api.imgur.com/3/image",
+          {
+            image: base64Image,
+            type: "base64",
+          },
+          {
+            headers: {
+              Authorization: "Client-ID " + imgurClientId,
+            },
+          }
+        );
+
+        const linkImgur = data.data.link;
+
+        const sendPrivateMessage = await PrivateMessage.create({
+          text,
+          SenderId: req.user.id,
+          ReceiverId: findReceivedUser.id,
+          imgUploadPriv: linkImgur,
+        });
+        return res.status(201).json(sendPrivateMessage);
       }
 
       const sendPrivateMessages = await PrivateMessage.create({

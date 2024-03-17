@@ -58,16 +58,21 @@ export const deletePrivMessageById = (id) => {
 };
 
 // send privMessage between logged user and other user by username
-export const sendPrivMessage = (username, sendMessage, sender) => {
+export const sendPrivMessage = (username, sendMessage, sender, file) => {
+
   return async (dispatch) => {
     try {
+      const formData = new FormData();
+      formData.append("image", file);
+      formData.append("text", sendMessage);
       const { data } = await axios({
         url: `/${username}/message`,
         method: "POST",
         headers: {
+          "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        data: { text: sendMessage },
+        data: formData,
       });
       socket.emit("sendMessage", {
         sender: sender.currentUsername,
