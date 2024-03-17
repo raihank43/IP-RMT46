@@ -1,6 +1,7 @@
 const axios = require("axios");
 const { Group, GroupMessage, User, Profile } = require("../models");
 const imgurClientId = process.env.imgurClientId;
+const giphyAPI_KEY = process.env.giphyAPI_KEY;
 module.exports = class GroupController {
   static async getAllPublicGroupMessage(req, res, next) {
     try {
@@ -74,31 +75,56 @@ module.exports = class GroupController {
         return res.status(201).json(sendMessage);
       }
 
-      const sendMessage = await GroupMessage.create({
-        UserId: req.user.id,
-        GroupId: 1,
-        text,
-      });
+      let messageSent = false;
 
-      let getDef;
-      // Jika pesan dimulai dengan /definitions, cari definisi kata
-      if (text.startsWith("/definitions ")) {
-        const word = text.split(" ")[1]; // ambil kata setelah /definitions
+      let getGif;
+      // Jika pesan dimulai dengan /gif, cari GIF di GIPHY
+      if (text.startsWith("/gif ")) {
+        const searchTerm = text.split(" ").slice(1).join(" ");
+        console.log(searchTerm);
         const response = await axios.get(
-          `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
+          `https://api.giphy.com/v1/gifs/search?api_key=${giphyAPI_KEY}&q=${searchTerm}`
         );
-        const definitions = response.data[0].meanings.map(
-          (meaning) => meaning.definitions[0].definition
-        );
-        getDef = `Definitions of ${word}: ${definitions.join(", ")}`;
-        await GroupMessage.create({
-          UserId: 4,
-          GroupId: 1,
-          text: getDef,
-        });
+        const gifs = response.data.data;
+        if (gifs.length > 0) {
+          getGif = gifs[0].images.original.url; // gunakan URL GIF pertama
+          const sendMessage = await GroupMessage.create({
+            UserId: req.user.id,
+            GroupId: 1,
+            text,
+            imgUploadGroup: getGif,
+          });
+          res.status(201).json(sendMessage);
+          messageSent = true;
+        }
       }
 
-      res.status(201).json(sendMessage);
+      if (!messageSent) {
+        const sendMessage = await GroupMessage.create({
+          UserId: req.user.id,
+          GroupId: 1,
+          text,
+        });
+
+        let getDef;
+        // Jika pesan dimulai dengan /definitions, cari definisi kata
+        if (text.startsWith("/definitions ")) {
+          const word = text.split(" ")[1]; // ambil kata setelah /definitions
+          const response = await axios.get(
+            `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
+          );
+          const definitions = response.data[0].meanings.map(
+            (meaning) => meaning.definitions[0].definition
+          );
+          getDef = `Definitions of ${word}: ${definitions.join(", ")}`;
+          await GroupMessage.create({
+            UserId: 4,
+            GroupId: 1,
+            text: getDef,
+          });
+        }
+        res.status(201).json(sendMessage);
+      }
     } catch (error) {
       console.log(error);
       next(error);
