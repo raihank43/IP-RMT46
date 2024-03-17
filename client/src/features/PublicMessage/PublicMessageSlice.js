@@ -36,7 +36,7 @@ export const fetchPublicMessage = () => {
   };
 };
 
-export const sendPublicMessage = (file, sendPubMessage) => {
+export const sendPublicMessage = (file, sendPubMessage, sender) => {
   return async (dispatch) => {
     try {
       const formData = new FormData();
@@ -48,7 +48,11 @@ export const sendPublicMessage = (file, sendPubMessage) => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      socket.emit("sendMessage", `Message Sent.`);
+      console.log(response)
+      socket.emit("sendMessage", {
+        message: `From ${sender.currentUsername}: ${response.data.text}`,
+        sender: sender.currentUsername,
+      });
     } catch (error) {
       console.log(error);
       toastFailed(error.response?.data?.message || error.message, "error");

@@ -12,7 +12,7 @@ import {
   fetchPublicMessage,
   sendPublicMessage,
 } from "../src/features/PublicMessage/PublicMessageSlice";
-
+import { fetchLoggedProfile } from "../src/features/User/CurrentlyLoggedProfile";
 export default function Home() {
   const dispatch = useDispatch();
   const [file, setFile] = useState(null);
@@ -21,19 +21,28 @@ export default function Home() {
   const [fileName, setFileName] = useState("Upload");
   const [loading, setLoading] = useState(false);
 
+  const loggedProfile = useSelector(
+    (state) => state.currentlyLoggedProfile.userDataLogin
+  );
+
+  const currentUser = {
+    currentUsername: loggedProfile.username,
+    currentId: loggedProfile.id,
+  };
+
   const handleSendMessage = async (event) => {
     event.preventDefault();
     setLoading("Loading....");
-    const response = dispatch(sendPublicMessage(file, sendPubMessage)).then(
-      () => {
-        if (response) {
-          setFileName("Upload");
-          setFile(null);
-          setSendPubMessage("");
-          setLoading(false);
-        }
+    const response = dispatch(
+      sendPublicMessage(file, sendPubMessage, currentUser)
+    ).then(() => {
+      if (response) {
+        setFileName("Upload");
+        setFile(null);
+        setSendPubMessage("");
+        setLoading(false);
       }
-    );
+    });
   };
 
   const onDeleteMessage = async (id) => {
@@ -54,7 +63,10 @@ export default function Home() {
   useEffect(() => {
     socket.connect();
     socket.on("broadcastMessage", (newMessage) => {
-      toastMsgNotif(newMessage);
+      if (newMessage.sender !== currentUser.currentUsername) {
+        toastMsgNotif(newMessage.message);
+      }
+
       dispatch(fetchPublicMessage());
     });
 
@@ -71,6 +83,7 @@ export default function Home() {
   }, [publicMessage]);
 
   useEffect(() => {
+    dispatch(fetchLoggedProfile());
     dispatch(fetchPublicMessage());
   }, []);
 
