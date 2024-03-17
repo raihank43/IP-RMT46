@@ -1,0 +1,148 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* CSS HEX */
+:root {
+  --rich-black: #0d1821ff;
+  --indigo-dye: #344966ff;
+  --powder-blue: #b4cdedff;
+  --baby-powder: #f0f4efff;
+}
+
+* {
+  margin: 0;
+  font-family: "Lexend", sans-serif;
+}
+.page-container {
+  /* border: solid black; */
+  background-color: var(--indigo-dye);
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  height: 100vh;
+}
+
+/* .empty-div {
+    border: solid black;
+} */
+
+.login-outer-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.login-container {
+  transition: box-shadow 0.5s ease, transform 0.5s ease; /* Menambahkan transisi untuk transformasi dan bayangan */
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Menambahkan bayangan */
+  background-color: white;
+
+  padding: 30px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.login-container:hover {
+  /* transform: scale(1.01); */
+  box-shadow: 10px 10px 50px 10px rgba(255, 255, 255, 0.2); /* Menambahkan bayangan */
+}
+
+.login-header > h1 {
+  color: var(--rich-black);
+}
+
+.login-body {
+  margin: 0px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+
+.login-body > form {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.login-body > form > input {
+  border: 1px solid var(--indigo-dye);
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  width: 100%;
+
+  /* background-color: rgb(236, 236, 236); */
+  height: 50px;
+  margin-top: 20px;
+}
+
+/* .login-body > form > input:hover {
+  border: solid blue;
+} */
+/* .login-footer {
+} */
+
+.login-button > button {
+  margin-top: 50px;
+  font-size: 100%;
+  font-weight: bold;
+  width: 100%;
+  height: 50px;
+  border: none;
+  border-radius: 15px;
+  color: white;
+  background-color: var(--indigo-dye);
+  transition: 0.3s ease; /* Menambahkan transisi untuk transformasi dan bayangan */
+}
+
+.login-button > button:hover {
+  background-color: rgb(82, 117, 161);
+}
+/* .login-footer {
+  border: solid black
+} */
+
+.login-footer > .OR {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.login-footer > #buttonDiv {
+  display: flex;
+  justify-content: center;
+}
+
+.login-footer > p {
+  font-size: 15px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.login-footer > p > a {
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.2s ease;
+}
+
+.login-footer > p > a:hover{
+  color: var(--powder-blue);
+}
+
+
+@keyframes gradient-x {
+  0%, 100% {
+    background-size: 200% 200%;
+    background-position: right center;
+  }
+  50% {
+    background-size: 200% 200%;
+    background-position: left center;
+  }
+}
+.animate-gradient-x {
+  animation: gradient-x 15s ease infinite;
+}
+

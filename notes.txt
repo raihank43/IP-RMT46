@@ -1,0 +1,2 @@
+CLIENT_ID: 1044060974853-lb9uqphq6g3esqsuf2u0lv2063dgnonh.apps.googleusercontent.com
+CLIENT_SECRET: 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

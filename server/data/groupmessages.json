@@ -1,0 +1,21 @@
+[
+  {
+    "UserId": 1,
+    "GroupId": 1,
+    "text": "Hello everyone in Group 1!",
+    "imgUploadGroup": ""
+  },
+  { "UserId": 2, "GroupId": 1, "text": "Hello Alice!", "imgUploadGroup": "" },
+  {
+    "UserId": 3,
+    "GroupId": 2,
+    "text": "Hello everyone in Group 2!",
+    "imgUploadGroup": ""
+  },
+  {
+    "UserId": 3,
+    "GroupId": 1,
+    "text": "My first upload image!",
+    "imgUploadGroup": "https://th.bing.com/th/id/OIP.K3p1oVqJR3hu46yMq-6qjQAAAA?rs=1&pid=ImgDetMain"
+  }
+]
