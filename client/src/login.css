@@ -130,3 +130,19 @@
 .login-footer > p > a:hover{
   color: var(--powder-blue);
 }
+
+
+@keyframes gradient-x {
+  0%, 100% {
+    background-size: 200% 200%;
+    background-position: right center;
+  }
+  50% {
+    background-size: 200% 200%;
+    background-position: left center;
+  }
+}
+.animate-gradient-x {
+  animation: gradient-x 15s ease infinite;
+}
+

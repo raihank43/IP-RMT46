@@ -24,60 +24,49 @@ export default function ProfileCreate() {
 
   return (
     <>
-      <div className="page-container">
-        <div className="empty-div"></div>
-        <div className="login-outer-container">
-          <div className="login-container">
-            <div className="login-header">
-              <h1>Silahkan Setup Profile mu terlebih dahulu.</h1>
-              <p></p>
-            </div>
-            <div className="login-body">
-              <form action="">
-                {/* <label for="">Email</label> */}
-                <input
-                  type="text"
-                  required=""
-                  name="fullName"
-                  value={fullName}
-                  placeholder="Enter your name..."
-                  onChange={(event) => setFullName(event.target.value)}
-                  //   onChange={(event) => setEmail(event.target.value)}
-                />
-                {/* <label for="">Password</label> */}
-                <input
-                  type="text"
-                  required=""
-                  name="bio"
-                  value={bio}
-                  placeholder="describe a little bit about yourself..."
-                  onChange={(event) => setBio(event.target.value)}
-                />
-
-                <input
-                  type="file"
-                  className="form-control pb-2"
-                  id="inputGroupFile02"
-                  autoComplete="off"
-                  required=""
-                  onChange={(e) => {
-                    setFile(e.target.files[0]);
-                  }}
-                />
-                <div className="login-button">
-                  <button type="submit" onClick={handleOnUpload}>
-                    SAVE
-                  </button>
-                </div>
-              </form>
-            </div>
-            <div className="login-footer">
-              {/* <div className="OR">- OR -</div> */}
-              <p>{/* Belum punya akun? Silahkan <a href="">Register.</a> */}</p>
-            </div>
-          </div>
+      <div className="flex items-center justify-center h-screen bg-gradient-to-r from-blue-800 to-blue-400 animate-gradient-x">
+        {/* Profile creation form in the center */}
+        <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-xl shadow-lg transform transition-transform duration-500 hover:scale-105 hover:shadow-2xl">
+          <h1 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+            Silahkan Setup Profile mu terlebih dahulu.
+          </h1>
+          <form action="" onSubmit={handleOnUpload} className="space-y-6">
+            <input
+              type="text"
+              required=""
+              name="fullName"
+              value={fullName}
+              placeholder="Enter your name..."
+              onChange={(event) => setFullName(event.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 hover:border-blue-500 transition-colors duration-200"
+            />
+            <input
+              type="text"
+              required=""
+              name="bio"
+              value={bio}
+              placeholder="Describe a little bit about yourself..."
+              onChange={(event) => setBio(event.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 hover:border-blue-500 transition-colors duration-200"
+            />
+            <input
+              type="file"
+              className="form-control pb-2"
+              id="inputGroupFile02"
+              autoComplete="off"
+              required=""
+              onChange={(e) => {
+                setFile(e.target.files[0]);
+              }}
+            />
+            <button
+              type="submit"
+              className="w-full py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 transition-colors duration-200"
+            >
+              SAVE
+            </button>
+          </form>
         </div>
-        <div className="empty-div"></div>
       </div>
     </>
   );

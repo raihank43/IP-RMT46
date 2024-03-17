@@ -4,6 +4,7 @@ import axios from "../utils/axios";
 import showToastSuccess from "../utils/toastSucces";
 import { useDispatch } from "react-redux";
 import { updateProfile } from "../src/features/Profile/ProfileSlice";
+import "../src/updateProfile.css"
 
 export default function UpdateProfile() {
   const dispatch = useDispatch();
@@ -28,43 +29,47 @@ export default function UpdateProfile() {
   };
 
   return (
-    <div className="flex items-center justify-center py-5 px-4">
-      <div className="bg-white shadow rounded-lg p-6 w-full md:w-1/2">
-        <h2 className="text-2xl font-bold mb-4">Update Profil</h2>
-        <form onSubmit={handleOnUpload}>
-          <label className="block mb-2 text-sm font-bold text-gray-700">
-            Nama:
-            <input
-              className="w-full px-3 py-2 mt-1 text-sm text-gray-700 border rounded-md focus:outline-none focus:shadow-outline"
-              type="text"
-              placeholder="Nama Anda"
-              name="fullName"
-              value={fullName}
-              onChange={(event) => setFullName(event.target.value)}
-            />
-          </label>
-          <label className="block mb-2 text-sm font-bold text-gray-700">
-            Bio:
-            <textarea
-              className="w-full px-3 py-2 mt-1 text-sm text-gray-700 border rounded-md focus:outline-none focus:shadow-outline"
-              rows={3}
-              placeholder="Bio Anda"
-              defaultValue={""}
-              value={bio}
-              onChange={(event) => setBio(event.target.value)}
-            />
-          </label>
-          <label className="block mb-2 text-sm font-bold text-gray-700">
-            Gambar Profil:
-            <input
-              className="w-full px-3 py-2 mt-1 text-sm text-gray-700 border rounded-md focus:outline-none focus:shadow-outline"
-              type="file"
-              onChange={(e) => {
-                setFile(e.target.files[0]);
-              }}
-            />
-          </label>
-          <button className="w-full px-3 py-2 mt-4 text-sm font-medium text-white bg-blue-500 rounded-md focus:outline-none focus:shadow-outline hover:bg-blue-600">
+    <div className="flex items-center justify-center h-screen bg-gradient-to-br from-blue-600 to-blue-300 animate-gradient-xy">
+      {/* Update profile form in the center with a glassmorphism effect */}
+      <div className="w-full max-w-lg p-8 bg-white/80 rounded-xl shadow-xl backdrop-blur-md border border-gray-200">
+        <h2 className="text-2xl font-bold mb-4 text-center text-gray-800">
+          Update Profil
+        </h2>
+        <form onSubmit={handleOnUpload} className="space-y-4">
+          <div className="space-y-2">
+            <label className="block text-sm font-bold text-gray-700">
+              Nama:
+              <input
+                className="w-full px-3 py-2 mt-1 text-sm text-gray-700 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                type="text"
+                placeholder="Nama Anda"
+                name="fullName"
+                value={fullName}
+                onChange={(event) => setFullName(event.target.value)}
+              />
+            </label>
+            <label className="block text-sm font-bold text-gray-700">
+              Bio:
+              <textarea
+                className="w-full px-3 py-2 mt-1 text-sm text-gray-700 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                rows={3}
+                placeholder="Bio Anda"
+                value={bio}
+                onChange={(event) => setBio(event.target.value)}
+              />
+            </label>
+            <label className="block text-sm font-bold text-gray-700">
+              Gambar Profil:
+              <input
+                className="w-full px-3 py-2 mt-1 text-sm text-gray-700 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                type="file"
+                onChange={(e) => {
+                  setFile(e.target.files[0]);
+                }}
+              />
+            </label>
+          </div>
+          <button className="w-full px-3 py-2 text-sm font-medium text-white bg-blue-500 rounded-md focus:outline-none focus:shadow-outline hover:bg-blue-600">
             Submit
           </button>
         </form>

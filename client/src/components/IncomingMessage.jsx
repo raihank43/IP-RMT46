@@ -8,7 +8,7 @@ export default function IncomingMessage({
   imgUpload,
 }) {
   return (
-    <div className="flex mb-4 cursor-pointer">
+    <div className="flex mb-4 cursor-pointer hover:scale-90 transition-all duration-1000">
       <div className="w-9 h-9 rounded-full flex items-center justify-center mr-2">
         <img
           src={profileImgUrl}
@@ -19,11 +19,11 @@ export default function IncomingMessage({
       <div className="flex flex-col max-w-96">
         <div className="font-bold mb-1 ml-1">{fullName}</div>{" "}
         {/* Tambahkan nama di sini */}
-        <div className="bg-white text-gray-700 rounded-lg p-3 gap-3">
+        <div className="bg-white text-gray-700 rounded-lg p-3 gap-3 hover:bg-gray-100 transition-colors duration-200">
           <p className="break-all">{text}</p>
           <img
             src={imgUpload ? imgUpload : ""}
-            className="transition-all duration-500 ease-in-out transform hover:scale-110"
+            className="transition-all duration-500 ease-in-out transform hover:scale-150"
             alt=""
           />
         </div>

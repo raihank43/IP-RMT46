@@ -134,14 +134,14 @@ export default function Home() {
           {/* Chat Input */}
           <footer className="bg-white border-t border-gray-300 p-4 absolute bottom-0 w-3/4 border-solid">
             <div>
-              <Modal />
+              {/* <Modal /> */}
               <form onSubmit={handleSendMessage} className="flex items-center">
                 <input
                   type="text"
                   placeholder="Type a message..."
                   value={sendPubMessage}
                   onChange={(e) => setSendPubMessage(e.target.value)}
-                  className="w-full p-2 rounded-md border border-gray-400 focus:outline-none focus:border-blue-500"
+                  className="w-full p-2 rounded-md border border-gray-400 focus:outline-none focus:border-blue-500 hover:shadow-md transition-shadow duration-300"
                 />
                 <input
                   type="file"
@@ -152,25 +152,25 @@ export default function Home() {
                 />
                 <label
                   htmlFor="upload"
-                  className="bg-blue-500 text-white px-4 py-2 rounded-md ml-2 cursor-pointer"
+                  className="bg-blue-500 text-white px-4 py-2 rounded-md ml-2 cursor-pointer hover:bg-blue-800 transition-colors duration-300"
                 >
                   {fileName}
                 </label>
                 <button
                   type="submit"
-                  className="bg-indigo-500 text-white px-4 py-2 rounded-md ml-2"
+                  className="bg-indigo-500 text-white px-4 py-2 rounded-md ml-2 hover:bg-indigo-800 transition-colors duration-300"
                 >
                   {loading ? <Loading /> : "Send"}
                 </button>
                 <button
                   onClick={clearFile}
-                  className="bg-red-500 text-white px-4 py-2 rounded-md ml-2"
+                  className="bg-red-500 text-white px-4 py-2 rounded-md ml-2 hover:bg-red-800 transition-colors duration-300"
                 >
                   Clear
                 </button>
                 {/* <button type="submit" className="bg-indigo-500 text-white px-4 py-2 rounded-md ml-2">
-                  Send
-                </button> */}
+        Send
+      </button> */}
               </form>
             </div>
           </footer>

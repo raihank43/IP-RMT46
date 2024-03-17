@@ -24,7 +24,7 @@ export default function Profile({
   return (
     <Link
       to={`/${username}/message`}
-      className="flex items-center space-x-3 p-2 rounded-md hover:bg-gray-100 transition-colors duration-200 cursor-pointer"
+      className="flex items-center space-x-3 p-2 rounded-md hover:bg-gray-100 transition-all duration-500 cursor-pointer transform hover:scale-90"
     >
       <div className="relative">
         <img
