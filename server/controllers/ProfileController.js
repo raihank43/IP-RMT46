@@ -13,7 +13,11 @@ cloudinary.config({
 module.exports = class ProfileController {
   static async getAllProfiles(req, res, next) {
     try {
-      const getAllProfiles = await Profile.findAll({ include: "User" });
+      const getAllProfiles = await Profile.findAll({
+        include: [
+          { model: User, as: "User", attributes: { exclude: ["password"] } },
+        ],
+      });
       res.status(200).json(getAllProfiles);
     } catch (error) {
       console.log(error);
@@ -104,8 +108,8 @@ module.exports = class ProfileController {
   static async updateProfile(req, res, next) {
     try {
       const { username } = req.params;
-      console.log(req.file);
-      console.log(req.body);
+      // console.log(req.file);
+      // console.log(req.body);
       const { fullName, profileImgUrl, bio } = req.body;
       const userProfile = await User.findOne({
         where: { username: username },
@@ -141,7 +145,7 @@ module.exports = class ProfileController {
         );
 
         return res
-          .status(200)
+          .status(201)
           .json({ message: "Profile updated Succesfully." });
       }
       //   console.log(userProfile.Profile.id);
@@ -155,15 +159,7 @@ module.exports = class ProfileController {
         { where: { id: userProfile.Profile.id } }
       );
 
-      res.status(200).json({ message: "Profile updated Succesfully." });
-    } catch (error) {
-      console.log(error);
-      next(error);
-    }
-  }
-
-  static async getCurrentLoggedProfile(req, res, next) {
-    try {
+      res.status(201).json({ message: "Profile updated Succesfully." });
     } catch (error) {
       console.log(error);
       next(error);

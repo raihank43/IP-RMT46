@@ -14,7 +14,7 @@ module.exports = class UserController {
       });
       res.status(201).json({ username, email });
     } catch (error) {
-      console.log(error, "<<<<<<<<<<<<<<")
+      console.log(error)
       next(error);
     }
   }

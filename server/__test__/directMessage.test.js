@@ -44,6 +44,10 @@ describe("GET /:username/message", () => {
       expect(body[0]).toHaveProperty("SenderId", expect.any(Number));
       expect(body[0]).toHaveProperty("text", expect.any(String));
       expect(body[0]).toHaveProperty("createdAt", expect.any(String));
+      expect(body[0]).toHaveProperty(
+        "messageBelongsToLoggedUser",
+        expect.any(Boolean)
+      );
       expect(body[0]).toHaveProperty("Sender", expect.any(Object));
       expect(body[0].Sender).toHaveProperty("username", expect.any(String));
       expect(body[0].Sender).toHaveProperty("Profile", expect.any(Object));
@@ -135,7 +139,7 @@ describe("POST /:username/message", () => {
       expect(status).toBe(404);
       expect(body).toHaveProperty("message", "User not Found.");
     });
-    
+
     test("Should return status 400 when text is not given", async () => {
       let { status, body } = await request(app)
         .post("/pre-InsertedDummy02/message")
