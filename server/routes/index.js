@@ -10,9 +10,10 @@ router.post("/register", UserController.Register);
 router.post("/login", UserController.Login);
 router.post("/google-login", UserController.googleLogin);
 
+router.get("/", HomeController.Home);
+
 router.use(authentication);
 router.get("/user", UserController.findCurrentlyLoggedUser);
-router.get("/", HomeController.Home);
 router.use("/profile", require("./profile"));
 
 router.get("/:username/message", MessageController.getDirectMessages);

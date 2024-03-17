@@ -147,6 +147,21 @@ describe("POST /profile", () => {
         "Profile has already been created."
       );
     });
+
+    test("Should return status 400 image is not attached", async () => {
+      let { status, body } = await request(app)
+        .post("/profile")
+        .field("fullName", "profile_dummy_account_01.fullName")
+        .field("bio", "profile_dummy_account_01.bio")
+        // .attach("image", image2, "image2.png")
+        .set("Authorization", `Bearer ${access_token_user_1}`);
+
+      expect(status).toBe(400);
+      expect(body).toHaveProperty(
+        "message",
+        "Image is required."
+      );
+    });
   });
 });
 
@@ -213,15 +228,15 @@ describe("PUT /profile/:username", () => {
     });
 
     test("Should return status 201 and a message of success update without image", async () => {
-        let { status, body } = await request(app)
-          .put("/profile/pre-InsertedDummy01")
-          .field("fullName", "changed_fullname01")
-          .field("bio", "changed_bio01")
-          .set("Authorization", `Bearer ${access_token_user_1}`);
-  
-        expect(status).toBe(201);
-        expect(body).toHaveProperty("message", "Profile updated Succesfully.");
-      });
+      let { status, body } = await request(app)
+        .put("/profile/pre-InsertedDummy01")
+        .field("fullName", "changed_fullname01")
+        .field("bio", "changed_bio01")
+        .set("Authorization", `Bearer ${access_token_user_1}`);
+
+      expect(status).toBe(201);
+      expect(body).toHaveProperty("message", "Profile updated Succesfully.");
+    });
   });
 
   describe("Failed", () => {
@@ -258,6 +273,18 @@ describe("PUT /profile/:username", () => {
 
       expect(status).toBe(403);
       expect(body).toHaveProperty("message", "You're not authorized");
+    });
+
+    test("Should return status 404 when username name not found", async () => {
+      let { status, body } = await request(app)
+        .put("/profile/unidentifiedUsername99")
+        .field("fullName", "changed_fullname03")
+        .field("bio", "changed_bio03")
+        // .attach("image", imageforupdate2, "imageforupdate2.png")
+        .set("Authorization", `Bearer ${access_token_user_2}`);
+
+      expect(status).toBe(404);
+      expect(body).toHaveProperty("message", "Profile not Found.");
     });
   });
 });
@@ -336,6 +363,16 @@ beforeAll(async () => {
 
 afterAll(async () => {
   await queryInterface.bulkDelete("Users", null, {
+    truncate: true,
+    restartIdentity: true,
+    cascade: true,
+  });
+  await queryInterface.bulkDelete("Profiles", null, {
+    truncate: true,
+    restartIdentity: true,
+    cascade: true,
+  });
+  await queryInterface.bulkDelete("PrivateMessages", null, {
     truncate: true,
     restartIdentity: true,
     cascade: true,

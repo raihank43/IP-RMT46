@@ -98,7 +98,7 @@ module.exports = class GroupController {
       res.status(200).json({ message: "Message succesfully deleted." });
     } catch (error) {
       console.log(error);
-      next(error)
+      next(error);
     }
   }
 };
