@@ -1,3 +1,4 @@
+const { Op } = require("sequelize");
 const { Profile, User } = require("../models");
 const cloud_name = process.env.cloud_name;
 const api_key = process.env.api_key;
@@ -13,11 +14,19 @@ cloudinary.config({
 module.exports = class ProfileController {
   static async getAllProfiles(req, res, next) {
     try {
-      const getAllProfiles = await Profile.findAll({
+      let { fullName } = req.query;
+      let queryOption = {
+        where: {},
         include: [
           { model: User, as: "User", attributes: { exclude: ["password"] } },
         ],
-      });
+      };
+
+      if (fullName) {
+        queryOption.where.fullName = { [Op.iLike]: `%${fullName}%` };
+      }
+      
+      const getAllProfiles = await Profile.findAll(queryOption);
       res.status(200).json(getAllProfiles);
     } catch (error) {
       console.log(error);

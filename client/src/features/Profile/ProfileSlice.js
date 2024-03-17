@@ -19,11 +19,11 @@ export const profileSlice = createSlice({
 
 export const { setProfile } = profileSlice.actions;
 
-export const fetchProfiles = () => {
+export const fetchProfiles = (searchTerm) => {
   return async (dispatch) => {
     try {
       const { data } = await axios({
-        url: "/profile",
+        url: searchTerm ? `/profile?fullName=${searchTerm}`: `/profile` ,
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },

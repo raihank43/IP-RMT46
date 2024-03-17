@@ -6,11 +6,16 @@ import { fetchProfiles } from "../features/Profile/ProfileSlice";
 
 export default function Sidebar() {
   const dispatch = useDispatch();
+  const [searchTerm, setSearchTerm] = useState("");
   const profile = useSelector((state) => state.profileData.profileList);
 
   useEffect(() => {
-    dispatch(fetchProfiles());
-  }, []);
+    dispatch(fetchProfiles(searchTerm));
+  }, [searchTerm]);
+
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+  };
 
   return (
     <div className="w-1/4 bg-white border-r border-gray-300">
@@ -56,6 +61,21 @@ export default function Sidebar() {
           </div>
         </div>
       </header>
+      {/* Search Bar */}
+      <div className="p-4">
+        <div className="flex items-center bg-white rounded-full shadow-md hover:shadow-xl transition-shadow duration-300">
+          <input
+            className="rounded-l-full w-full py-2 px-6 text-gray-700 leading-tight focus:outline-none"
+            id="search"
+            type="text"
+            placeholder="Search"
+            value={searchTerm}
+            onChange={handleSearch}
+          />
+          <div className="p-2">
+          </div>
+        </div>
+      </div>
       {/* Contact List */}
       <div className="overflow-y-auto max-h-[80vh] h-screen p-3 mb-9 pb-20">
         {profile
