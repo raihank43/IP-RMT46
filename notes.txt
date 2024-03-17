@@ -1,2 +1,6 @@
 CLIENT_ID: 1044060974853-lb9uqphq6g3esqsuf2u0lv2063dgnonh.apps.googleusercontent.com
 CLIENT_SECRET: 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
+SUPABASE_PASS: pakraden133
+DATABASE_URI:postgres://postgres.cpiyyetgwjhsbemttolt:pakraden133@aws-0-ap-southeast-1.pooler.supabase.com:5432/postgres
+
+ssh -i "koneksiON.pem" ubuntu@ec2-13-229-215-39.ap-southeast-1.compute.amazonaws.com
