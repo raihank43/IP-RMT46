@@ -1,8 +1,8 @@
 const { Op } = require("sequelize");
 const { Profile, User } = require("../models");
 const cloud_name = process.env.cloud_name;
-const api_key = process.env.api_key;
-const api_secret = process.env.api_secret;
+const api_key = process.env.cloudinary_api_key;
+const api_secret = process.env.cloudinary_api_secret;
 
 const cloudinary = require("cloudinary").v2; // versi nodeJS
 cloudinary.config({

@@ -3,19 +3,19 @@
     "UserId": 1,
     "fullName": "Alice Wonderland",
     "bio": "Hello, I am Alice!",
-    "profileImgUrl": "alice.jpg"
+    "profileImgUrl": "https://th.bing.com/th/id/OIP.tvaMwK3QuFxhTYg4PSNNVAHaHa?rs=1&pid=ImgDetMain"
   },
   {
     "UserId": 2,
     "fullName": "Bob Doe",
     "bio": "Hello, I am Bob!",
-    "profileImgUrl": "bob.jpg"
+    "profileImgUrl": "https://th.bing.com/th/id/OIP.tvaMwK3QuFxhTYg4PSNNVAHaHa?rs=1&pid=ImgDetMain"
   },
   {
     "UserId": 3,
     "fullName": "Charlie Frankenstein",
     "bio": "Hello, I am Charlie!",
-    "profileImgUrl": "charlie.jpg"
+    "profileImgUrl": "https://th.bing.com/th/id/OIP.tvaMwK3QuFxhTYg4PSNNVAHaHa?rs=1&pid=ImgDetMain"
   },
   {
     "UserId": 4,
