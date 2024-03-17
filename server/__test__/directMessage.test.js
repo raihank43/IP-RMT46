@@ -5,6 +5,16 @@ const { hashPassword } = require("../helpers/bcrypt");
 const { signToken, verifyToken } = require("../helpers/jwt.js");
 const { queryInterface } = sequelize;
 const { User, PrivateMessage } = require("../models");
+const fs = require("fs");
+const path = require("path");
+const filePath = path.resolve(__dirname, "../data/image.png");
+const filePath2 = path.resolve(__dirname, "../data/image2.png");
+const filePath3 = path.resolve(__dirname, "../data/imageforupdated.jpg");
+const filePath4 = path.resolve(__dirname, "../data/imageforupdate2.png");
+const image = fs.createReadStream(filePath);
+const image2 = fs.createReadStream(filePath2);
+const imageforupdate = fs.createReadStream(filePath3);
+const imageforupdate2 = fs.createReadStream(filePath4);
 
 const user_1 = {
   username: "dummy",
@@ -44,6 +54,7 @@ describe("GET /:username/message", () => {
       expect(body[0]).toHaveProperty("SenderId", expect.any(Number));
       expect(body[0]).toHaveProperty("text", expect.any(String));
       expect(body[0]).toHaveProperty("createdAt", expect.any(String));
+      expect(body[0]).toHaveProperty("updatedAt", expect.any(String));
       expect(body[0]).toHaveProperty(
         "messageBelongsToLoggedUser",
         expect.any(Boolean)
@@ -93,16 +104,35 @@ describe("GET /:username/message", () => {
 
 describe("POST /:username/message", () => {
   describe("Success", () => {
-    test("should return status 201 and an object of message data", async () => {
+    test("should return status 201 and an object of message data with image", async () => {
       let { status, body } = await request(app)
         .post("/pre-InsertedDummy02/message")
-        .send({ text: "helllooo" })
+        .field("text", "helllloooo")
+        .attach("image", image, "image.png")
         .set("Authorization", `Bearer ${access_token_user_1}`);
 
       expect(status).toBe(201);
       expect(body).toEqual(expect.any(Object));
       expect(body).toHaveProperty("id", expect.any(Number));
       expect(body).toHaveProperty("text", expect.any(String));
+      expect(body).toHaveProperty("imgUploadPriv", expect.any(String));
+      expect(body).toHaveProperty("SenderId", expect.any(Number));
+      expect(body).toHaveProperty("ReceiverId", expect.any(Number));
+      expect(body).toHaveProperty("updatedAt", expect.any(String));
+      expect(body).toHaveProperty("createdAt", expect.any(String));
+    });
+
+    test("should return status 201 and an object of message data without image", async () => {
+      let { status, body } = await request(app)
+        .post("/pre-InsertedDummy02/message")
+        .field("text", "helllloooo")
+        .set("Authorization", `Bearer ${access_token_user_1}`);
+
+      expect(status).toBe(201);
+      expect(body).toEqual(expect.any(Object));
+      expect(body).toHaveProperty("id", expect.any(Number));
+      expect(body).toHaveProperty("text", expect.any(String));
+    //   expect(body).toHaveProperty("imgUploadPriv", expect.any(null));
       expect(body).toHaveProperty("SenderId", expect.any(Number));
       expect(body).toHaveProperty("ReceiverId", expect.any(Number));
       expect(body).toHaveProperty("updatedAt", expect.any(String));
@@ -114,7 +144,8 @@ describe("POST /:username/message", () => {
     test("Should return status 401 unauthenticated when haven't logged in yet", async () => {
       let { status, body } = await request(app)
         .post("/pre-InsertedDummy02/message")
-        .send({ text: "helllooo" });
+        .field("text", "helllloooo")
+        .attach("image", image, "image.png")
 
       expect(status).toBe(401);
       expect(body).toHaveProperty("message", "You're not authorized");
@@ -123,7 +154,8 @@ describe("POST /:username/message", () => {
     test("Should return status 401 unauthenticated when token is invalid", async () => {
       let { status, body } = await request(app)
         .post("/pre-InsertedDummy02/message")
-        .send({ text: "helllooo" })
+        .field("text", "helllloooo")
+        .attach("image", imageforupdate, "image.png")
         .set("Authorization", `Bear ${access_token_user_1}`);
 
       expect(status).toBe(401);
@@ -133,7 +165,8 @@ describe("POST /:username/message", () => {
     test("Should return status 404 when username is not found", async () => {
       let { status, body } = await request(app)
         .post("/obviouslyUnidentifiedUsername/message")
-        .send({ text: "helllooo" })
+        .field("text", "helllloooo")
+        .attach("image", image2, "image.png")
         .set("Authorization", `Bearer ${access_token_user_1}`);
 
       expect(status).toBe(404);
@@ -143,6 +176,7 @@ describe("POST /:username/message", () => {
     test("Should return status 400 when text is not given", async () => {
       let { status, body } = await request(app)
         .post("/pre-InsertedDummy02/message")
+        .attach("image", imageforupdate2, "image.png")
         .set("Authorization", `Bearer ${access_token_user_1}`);
 
       expect(status).toBe(400);
@@ -153,6 +187,7 @@ describe("POST /:username/message", () => {
       let { status, body } = await request(app)
         .post("/pre-InsertedDummy02/message")
         .send({ text: "" })
+        .attach("image", image, "image.png")
         .set("Authorization", `Bearer ${access_token_user_1}`);
 
       expect(status).toBe(400);
