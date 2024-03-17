@@ -9,5 +9,10 @@
     "username": "Charlie",
     "email": "charlie@example.com",
     "password": "password123"
+  },
+  {
+    "username": "freeDictionary",
+    "email": "freeDictionary@free.com",
+    "password": "freeDictionary"
   }
 ]

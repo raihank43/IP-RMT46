@@ -13,6 +13,7 @@ import {
   sendPublicMessage,
 } from "../src/features/PublicMessage/PublicMessageSlice";
 import { fetchLoggedProfile } from "../src/features/User/CurrentlyLoggedProfile";
+import Modal from "../src/components/Modal";
 export default function Home() {
   const dispatch = useDispatch();
   const [file, setFile] = useState(null);
@@ -133,6 +134,7 @@ export default function Home() {
           {/* Chat Input */}
           <footer className="bg-white border-t border-gray-300 p-4 absolute bottom-0 w-3/4 border-solid">
             <div>
+              <Modal />
               <form onSubmit={handleSendMessage} className="flex items-center">
                 <input
                   type="text"

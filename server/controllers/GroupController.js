@@ -80,6 +80,24 @@ module.exports = class GroupController {
         text,
       });
 
+      let getDef;
+      // Jika pesan dimulai dengan /definitions, cari definisi kata
+      if (text.startsWith("/definitions ")) {
+        const word = text.split(" ")[1]; // ambil kata setelah /definitions
+        const response = await axios.get(
+          `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
+        );
+        const definitions = response.data[0].meanings.map(
+          (meaning) => meaning.definitions[0].definition
+        );
+        getDef = `Definitions of ${word}: ${definitions.join(", ")}`;
+        await GroupMessage.create({
+          UserId: 4,
+          GroupId: 1,
+          text: getDef,
+        });
+      }
+
       res.status(201).json(sendMessage);
     } catch (error) {
       console.log(error);

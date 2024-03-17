@@ -79,7 +79,7 @@ module.exports = class MessageController {
   static async sendDirectMessage(req, res, next) {
     try {
       const { username } = req.params;
-      const { text } = req.body;
+      let { text } = req.body;
       if (!text) {
         throw {
           name: "CustomError",
@@ -87,10 +87,6 @@ module.exports = class MessageController {
           message: "Message is required.",
         };
       }
-      if (!username) {
-        throw { name: "CustomError", status: 404, message: "User not Found." };
-      }
-
       const findReceivedUser = await User.findOne({
         where: { username: username },
       });
@@ -138,7 +134,6 @@ module.exports = class MessageController {
       next(error);
     }
   }
-
   static async deleteDirectMessage(req, res, next) {
     try {
       const { id } = req.params;

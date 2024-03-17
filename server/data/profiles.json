@@ -16,5 +16,11 @@
     "fullName": "Charlie Frankenstein",
     "bio": "Hello, I am Charlie!",
     "profileImgUrl": "charlie.jpg"
+  },
+  {
+    "UserId": 4,
+    "fullName": "Free Dictionary",
+    "bio": "type /definitions [words] to get words definitions",
+    "profileImgUrl": "https://th.bing.com/th/id/OIP.Fde_KkrUhMbhLgCuv4BtFQAAAA?rs=1&pid=ImgDetMain"
   }
 ]
