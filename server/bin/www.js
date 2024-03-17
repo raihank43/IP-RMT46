@@ -4,7 +4,7 @@ const { Server } = require("socket.io");
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: "https://koneksi-on.web.app/",
+    origin: "https://koneksi-on.web.app",
     methods: ["GET", "POST"],
   },
 });
