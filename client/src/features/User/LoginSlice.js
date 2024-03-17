@@ -30,6 +30,7 @@ export const loginSubmit = (loginData, navigate) => {
       });
 
       localStorage.setItem("token", data.access_token);
+      // socket.emit("connectedUser", data.id);
 
       const findProfile = await axios({
         url: `/profile/${data.username}`,

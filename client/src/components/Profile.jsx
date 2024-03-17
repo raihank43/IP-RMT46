@@ -1,20 +1,42 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-export default function Profile({ profileImgUrl, fullName, bio, username }) {
+import { socket } from "../socket";
+import toastMsgNotif from "../../utils/toastMsgNotif";
+export default function Profile({
+  profileImgUrl,
+  fullName,
+  bio,
+  username,
+  UserId,
+}) {
+  // const [loggedUser, setLoggedUser] = useState({});
+
+  // useEffect(() => {
+  //   socket.on("broadcastUser", (newUser) => {
+  //     toastMsgNotif(newUser);
+  //     console.log(newUser)
+  //   });
+
+  //   return () => {
+  //     socket.off("broadcastUser");
+  //   };
+  // });
   return (
     <Link
       to={`/${username}/message`}
-      className="flex items-center mb-4 cursor-pointer hover:bg-gray-100 p-2 rounded-md"
+      className="flex items-center space-x-3 p-2 rounded-md hover:bg-gray-100 transition-colors duration-200 cursor-pointer"
     >
-      <div className="w-12 h-12 bg-gray-300 rounded-full mr-3">
+      <div className="relative">
         <img
           src={profileImgUrl}
-          alt="User Avatar"
-          className="w-12 h-12 rounded-full"
+          alt="Profile"
+          className="h-12 w-12 rounded-full"
         />
+        <span className="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-white bg-green-400"></span>
       </div>
-      <div className="flex-1">
-        <h2 className="text-lg font-semibold">{fullName}</h2>
-        <p className="text-gray-600">{bio}</p>
+      <div>
+        <h3 className="text-gray-700 font-semibold">{fullName}</h3>
+        <p className="text-sm text-gray-500">{bio}</p>
       </div>
     </Link>
   );

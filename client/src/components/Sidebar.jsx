@@ -3,6 +3,7 @@ import axios from "../../utils/axios";
 import Profile from "./Profile";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProfiles } from "../features/Profile/ProfileSlice";
+import { socket } from "../socket";
 
 export default function Sidebar() {
   const dispatch = useDispatch();
@@ -12,6 +13,13 @@ export default function Sidebar() {
   useEffect(() => {
     dispatch(fetchProfiles(searchTerm));
   }, [searchTerm]);
+
+
+  useEffect(()=> {
+    socket.on("UserConnected", (newMessage) => {
+      console.log("helllo")
+    });
+  }, [])
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
@@ -72,8 +80,6 @@ export default function Sidebar() {
             value={searchTerm}
             onChange={handleSearch}
           />
-          <div className="p-2">
-          </div>
         </div>
       </div>
       {/* Contact List */}
@@ -87,6 +93,7 @@ export default function Sidebar() {
                   fullName={el.fullName}
                   bio={el.bio}
                   username={el.User.username}
+                  UserId={el.User.id}
                 />
               );
             })

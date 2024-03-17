@@ -16,6 +16,7 @@ import {
   setMessage,
 } from "../src/features/DirectMessage/DirectMessageSlice";
 import { findProfiles } from "../src/features/Profile/FindUsernameByProfileSlice";
+import { fetchLoggedProfile } from "../src/features/User/CurrentlyLoggedProfile";
 
 export default function DirectMessage() {
   // const [, setReceiverUsername] = useState("");
@@ -25,10 +26,24 @@ export default function DirectMessage() {
   const receiverUsername = useSelector((state) => state.receiver.username);
   const [sendMessage, setSendMessage] = useState("");
   const { username } = useParams();
+  const loggedProfile = useSelector(
+    (state) => state.currentlyLoggedProfile.userDataLogin
+  );
+
+  useEffect(() => {
+    fetchLoggedProfile();
+  }, []);
+
+  const currentUser = {
+    currentUsername: loggedProfile.username,
+    currentId: loggedProfile.id,
+  };
 
   const handleSendMessage = async (event) => {
     event.preventDefault();
-    dispatch(sendPrivMessage(username, sendMessage));
+    // fetchLoggedProfile();
+    // const sender = loggedProfile.Profile.fullName;
+    dispatch(sendPrivMessage(username, sendMessage, currentUser));
     setSendMessage("");
   };
 
@@ -42,7 +57,9 @@ export default function DirectMessage() {
     socket.on("broadcastMessage", (newMessage) => {
       // console.log(newMessage, "<<<< ini dari client");
       // setMessage((prevMessages) => [...prevMessages, newMessage]);
-      toastMsgNotif(newMessage);
+      if (currentUser.currentId === newMessage.receiver) {
+        toastMsgNotif(newMessage.message);
+      }
       dispatch(fetchDirectMessages(username));
       // console.log(message, "<<<<< ini message")
     });

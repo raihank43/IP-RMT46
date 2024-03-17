@@ -5,7 +5,7 @@ import registerSliceReducer from "./features/User/RegisterSlice";
 import loginSliceReducer from "./features/User/LoginSlice";
 import PublicMessageReducer from "./features/PublicMessage/PublicMessageSlice";
 import ProfileReducer from "./features/Profile/ProfileSlice";
-
+import CurrentlyLoggedProfileReducer from "./features/User/CurrentlyLoggedProfile";
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +14,7 @@ export const store = configureStore({
     userData: registerSliceReducer,
     loginData: loginSliceReducer,
     pubMessage: PublicMessageReducer,
-    profileData: ProfileReducer
+    profileData: ProfileReducer,
+    currentlyLoggedProfile: CurrentlyLoggedProfileReducer,
   },
 });

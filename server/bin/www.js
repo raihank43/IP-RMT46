@@ -21,6 +21,10 @@ io.on("connection", (socket) => {
   //   console.log("message: " + msg);
   //   io.emit('new message', msg);
   // });
+  // socket.on("connectedUser", (data) => {
+
+  //   io.emit("broadcastUser", data);
+  // });
 
   socket.on("sendMessage", (data) => {
     // console.log(data, "<<<< ini keterima diserver 1");

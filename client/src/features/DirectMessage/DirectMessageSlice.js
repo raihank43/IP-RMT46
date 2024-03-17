@@ -58,7 +58,7 @@ export const deletePrivMessageById = (id) => {
 };
 
 // send privMessage between logged user and other user by username
-export const sendPrivMessage = (username, sendMessage) => {
+export const sendPrivMessage = (username, sendMessage, sender) => {
   return async (dispatch) => {
     try {
       const { data } = await axios({
@@ -69,7 +69,11 @@ export const sendPrivMessage = (username, sendMessage) => {
         },
         data: { text: sendMessage },
       });
-      socket.emit("sendMessage", `From ${username}: ${data.text}`);
+      socket.emit("sendMessage", {
+        sender: sender.currentUsername,
+        receiver: data.ReceiverId,
+        message: `From ${sender.currentUsername}: ${data.text}`,
+      });
     } catch (error) {
       console.log(error);
     }

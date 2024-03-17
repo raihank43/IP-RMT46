@@ -3,37 +3,22 @@ import LogoutButton from "./Logout";
 import { useEffect, useState } from "react";
 import axios from "../../utils/axios";
 import DropdownMenu from "./DropDownMenu";
-
+import { useDispatch, useSelector } from "react-redux";
+import { fetchLoggedProfile } from "../features/User/CurrentlyLoggedProfile";
 
 export default function Navbar() {
-  const [loggedProfile, setLoggedProfile] = useState("");
-  const [loading, setLoading] = useState(false)
-
-  const fetchLoggedProfile = async () => {
-    try {
-      setLoading("loading....")
-      const { data } = await axios({
-        url: "/user",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-      setLoggedProfile(data);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false)
-    }
-  };
+  const dispatch = useDispatch();
+  const loggedProfile = useSelector(
+    (state) => state.currentlyLoggedProfile.userDataLogin
+  );
 
   useEffect(() => {
-    fetchLoggedProfile();
-    setLoading
+    dispatch(fetchLoggedProfile());
   }, []);
 
-  if (loading) {
-    return <h1>Loading....</h1>;
-  }
+  // if (loading) {
+  //   return <h1>Loading....</h1>;
+  // }
 
   return (
     <nav className="bg-gray-800 p-2 mt-0 w-full">
@@ -62,7 +47,7 @@ export default function Navbar() {
                 Active
               </a>
             </li>
-        
+
             <li className="mr-3">
               <a
                 className="inline-block text-gray-600 no-underline hover:text-gray-200 hover:text-underline py-2 px-4"
