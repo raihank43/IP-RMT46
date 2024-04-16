@@ -4,7 +4,10 @@ const { Server } = require("socket.io");
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: "https://koneksi-on.web.app",
+    origin:
+      process.env.NODE_ENV === "production"
+        ? "https://koneksi-on.web.app"
+        : "http://localhost:5173",
     methods: ["GET", "POST"],
   },
 });

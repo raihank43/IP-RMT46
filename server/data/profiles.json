@@ -22,5 +22,11 @@
     "fullName": "Free Dictionary",
     "bio": "type /definitions [words] to get words definitions",
     "profileImgUrl": "https://th.bing.com/th/id/OIP.Fde_KkrUhMbhLgCuv4BtFQAAAA?rs=1&pid=ImgDetMain"
+  },
+  {
+    "UserId": 5,
+    "fullName": "ChatBot AI",
+    "bio": "type /chatai [words] to talk with AI",
+    "profileImgUrl": "https://static.vecteezy.com/system/resources/previews/000/199/370/original/vector-robot-cheerful-isolated-on-blue-background-concept-illustration.jpg"
   }
 ]

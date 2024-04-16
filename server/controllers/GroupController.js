@@ -1,7 +1,15 @@
 const axios = require("axios");
 const { Group, GroupMessage, User, Profile } = require("../models");
+const { default: OpenAI } = require("openai");
+const openai = new OpenAI({ apiKey: process.env.OPEN_AI });
 const imgurClientId = process.env.imgurClientId;
 const giphyAPI_KEY = process.env.giphyAPI_KEY;
+// const OPEN_AI_KEY = process.env.OPEN_AI;
+// client = OpenAI((api_key = os.environ.get("OPEN_AI_KEY")));
+// const openai = new OpenAI((api_key = os.environ.get("OPEN_AI_KEY")));
+const { Hercai } = require("hercai");
+const herc = new Hercai(); //new Hercai("your api key"); => Optional
+
 module.exports = class GroupController {
   static async getAllPublicGroupMessage(req, res, next) {
     try {
@@ -81,7 +89,7 @@ module.exports = class GroupController {
       // Jika pesan dimulai dengan /gif, cari GIF di GIPHY
       if (text.startsWith("/gif ")) {
         const searchTerm = text.split(" ").slice(1).join(" ");
-        console.log(searchTerm);
+        // console.log(searchTerm);
         const response = await axios.get(
           `https://api.giphy.com/v1/gifs/search?api_key=${giphyAPI_KEY}&q=${searchTerm}`
         );
@@ -123,6 +131,38 @@ module.exports = class GroupController {
             text: getDef,
           });
         }
+        console.log(text);
+        let chatai;
+        // if (text.startsWith("/chatai ")) {
+        //   console.log("masuk");
+        //   const prompt = text.split(" ").slice(1).join(" ");
+        //   const completion = await openai.chat.completions.create({
+        //     messages: [
+        //       { role: "system", content: "You are a helpful assistant." },
+        //     ],
+        //     model: "gpt-3.5-turbo",
+        //   });
+        //   // chatai = completion.data.choices[0].text.trim();
+        //   console.log(completion);
+        //   await GroupMessage.create({
+        //     UserId: 7,
+        //     GroupId: 1,
+        //     text: chatai,
+        //   });
+        // }
+
+        if (text.startsWith("/chatai ")) {
+          console.log("masuk");
+          const prompt = text.split(" ").slice(1).join(" ");
+
+          const res = await herc.question({ model: "v3", content: prompt });
+          await GroupMessage.create({
+            UserId: 5,
+            GroupId: 1,
+            text: res.reply,
+          });
+        }
+
         res.status(201).json(sendMessage);
       }
     } catch (error) {

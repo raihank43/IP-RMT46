@@ -14,5 +14,10 @@
     "username": "freeDictionary",
     "email": "freeDictionary@free.com",
     "password": "freeDictionary"
+  },
+  {
+    "username": "ChatBot",
+    "email": "chatBot@AI.com",
+    "password": "chatbot123"
   }
 ]
