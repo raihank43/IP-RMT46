@@ -16,7 +16,7 @@ export default function OutgoingMessage({
       <div className="flex flex-col max-w-96">
         {/* <div className="font-bold text-end mb-2 mr-2">{fullName}</div>  */}
         <div className="bg-indigo-500 text-white rounded-lg p-3 gap-3 relative hover:bg-indigo-600 transition-colors duration-200">
-          <p className="break-all">{text}</p>
+          <p className="break-normal">{text}</p>
           <img
             src={imgUpload ? imgUpload : ""}
             alt=""

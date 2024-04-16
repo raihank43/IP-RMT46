@@ -20,7 +20,7 @@ export default function IncomingMessage({
         <div className="font-bold mb-1 ml-1">{fullName}</div>{" "}
         {/* Tambahkan nama di sini */}
         <div className="bg-white text-gray-700 rounded-lg p-3 gap-3 hover:bg-gray-100 transition-colors duration-200">
-          <p className="break-all">{text}</p>
+          <p className="break-normal">{text}</p>
           <img
             src={imgUpload ? imgUpload : ""}
             className="transition-all duration-500 ease-in-out transform hover:scale-150"

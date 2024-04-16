@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
           notNull: { msg: "GroupId is required." },
         },
       },
-      text: DataTypes.STRING,
+      text: DataTypes.TEXT,
       imgUploadGroup: DataTypes.STRING,
     },
 
