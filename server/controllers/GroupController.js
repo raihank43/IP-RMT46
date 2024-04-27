@@ -163,6 +163,8 @@ module.exports = class GroupController {
           });
         }
 
+        console.log(res.reply)
+
         res.status(201).json(sendMessage);
       }
     } catch (error) {
