@@ -1,4 +1,71 @@
-# Individual Project
+# KoneksiON - Individual Project
+![Open in Visual Studio Code](/assets/koneksion_logo.PNG)
+
+## Description
+This is a real-time, chat-based social media application for my individual project. Users can register with Google OAuth, chat with everyone or between users in real-time, send images, update their profiles, delete messages, and use commands like “/gif” to generate a gif and “/definitions” to get word definitions, users can also chat with AI chatbot on public group using "/chatai" commands, all powered by third-party APIs.
+
+## Techstacks
+AWS, PostgreSQL, React, React Redux, Node.js, express.js, socket.io, REST API
+
+## Preview
+- Register
+
+![Open in Visual Studio Code](/assets/Screenshot_27-4-2024_10436_localhost.jpeg)
+- Login
+
+![Open in Visual Studio Code](/assets/Screenshot_27-4-2024_104243_localhost.jpeg)
+
+- Setup Account
+
+![Open in Visual Studio Code](/assets/Screenshot_27-4-2024_104549_localhost.jpeg)
+
+- Landing Page / Public Group
+### All users can send their message, upload image, delete message, chat with bots on public group in realtime
+
+![Open in Visual Studio Code](/assets/Screenshot_27-4-2024_104228_localhost.jpeg)
+
+- Private Message / Direct Message
+### A chat between two users in realtime
+
+![Open in Visual Studio Code](/assets/Untitled.png)
+
+![Open in Visual Studio Code](/assets/Untitled2.png)
+
+![Open in Visual Studio Code](/assets/Untitled3.png)
+
+![Open in Visual Studio Code](/assets/Untitled3.png)
+### Upload image too!
+
+![Open in Visual Studio Code](/assets/Untitled5.png)
+
+### Delete Message
+
+![Open in Visual Studio Code](/assets/Untitled4.png)
+
+![Open in Visual Studio Code](/assets/Untitled6.png)
+
+- Chat with bots (on public group only)
+## get words definitions using "/definitions" commands, using freeDictionary APIs
+
+![Open in Visual Studio Code](/assets/Screenshot_27-4-2024_10560_localhost.jpeg)
+
+## generate gif using "/gif" commands, using giphy APIs
+
+![Open in Visual Studio Code](/assets/Screenshot_27-4-2024_105642_localhost.jpeg)
+
+## chat with AI using "/chatAI" commands, using herc.ai APIs
+
+![Open in Visual Studio Code](/assets/Screenshot_27-4-2024_105744_localhost.jpeg)
+
+![Open in Visual Studio Code](/assets/Screenshot_27-4-2024_105757_localhost.jpeg)
+
+
+- Updating Profile
+
+![Open in Visual Studio Code](/assets/Screenshot_27-4-2024_105832_localhost.jpeg)
+
+![Open in Visual Studio Code](/assets/Screenshot_27-4-2024_105851_localhost.jpeg)
+
 
 ## KoneksiON API Documentation
 
