@@ -4,8 +4,10 @@
 ## Description
 This is a real-time, chat-based social media application for my individual project. Users can register with Google OAuth, chat with everyone or between users in real-time, send images, update their profiles, delete messages, and use commands like “/gif” to generate a gif and “/definitions” to get word definitions, users can also chat with AI chatbot on public group using "/chatai" commands, all powered by third-party APIs.
 
+The app can be accessed here: https://koneksi-on.web.app/
+
 ## Techstacks
-AWS, PostgreSQL, React, React Redux, Node.js, express.js, socket.io, REST API
+AWS, PostgreSQL, Firebase, React, React Redux, Node.js, express.js, socket.io, REST API
 
 ## Preview
 - Register
