@@ -4,7 +4,7 @@ import axios from "../utils/axios";
 import showToastSuccess from "../utils/toastSucces";
 import { useDispatch } from "react-redux";
 import { updateProfile } from "../src/features/Profile/ProfileSlice";
-import "../src/updateProfile.css"
+import "../src/updateProfile.css";
 
 export default function UpdateProfile() {
   const dispatch = useDispatch();
@@ -12,6 +12,7 @@ export default function UpdateProfile() {
   const [bio, setBio] = useState("");
   const [fullName, setFullName] = useState("");
   const { username } = useParams();
+  document.title = "Update Profile - KoneksiON";
 
   const nav = useNavigate();
 

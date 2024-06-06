@@ -21,6 +21,7 @@ export default function Home() {
   const [sendPubMessage, setSendPubMessage] = useState("");
   const [fileName, setFileName] = useState("Upload");
   const [loading, setLoading] = useState(false);
+  document.title = "Home Public Chat - KoneksiON";
 
   const loggedProfile = useSelector(
     (state) => state.currentlyLoggedProfile.userDataLogin
