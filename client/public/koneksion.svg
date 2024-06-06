@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW 2020 (64-Bit) -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="75.7766mm" height="46.736mm" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 7577.66 4673.6"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ xmlns:xodm="http://www.corel.com/coreldraw/odm/2003">
+ <defs>
+  <font id="FontID0" horiz-adv-x="765" font-variant="normal" class="str1" style="fill-rule:nonzero" font-style="normal" font-weight="700">
+	<font-face 
+		font-family="Montserrat">
+		<font-face-src>
+			<font-face-name name="Montserrat Bold"/>
+		</font-face-src>
+	</font-face>
+   <missing-glyph><path d="M0 0z"/></missing-glyph>
+   <glyph unicode="N" horiz-adv-x="807" d="M725.003 700.002l0 -700.002 -133.006 0 -349 424.996 0 -424.996 -159.993 0 0 700.002 133.999 0 347.999 -425.005 0 425.005 160.001 0z"/>
+   <glyph unicode="O" horiz-adv-x="844" d="M422.001 -11.996c-72.6707,0 -138.169,15.6609 -196.502,46.9994 -58.3335,31.3301 -104.001,74.4991 -137.002,129.498 -32.993,54.9994 -49.4978,116.832 -49.4978,185.499 0,68.6665 16.5048,130.5 49.4978,185.499 33.0013,54.9994 78.6687,98.1683 137.002,129.498 58.3335,31.3384 123.831,46.9994 196.502,46.9994 72.6624,0 137.995,-15.6609 195.997,-46.9994 58.0025,-31.3301 103.67,-74.4991 137.002,-129.498 33.3322,-54.9994 50.0025,-116.832 50.0025,-185.499 0,-68.6665 -16.6703,-130.5 -50.0025,-185.499 -33.3322,-54.9994 -78.9996,-98.1683 -137.002,-129.498 -58.0025,-31.3384 -123.335,-46.9994 -195.997,-46.9994zm0 137.995c41.3323,0 78.6687,9.49749 112.001,28.5008 33.3322,19.0033 59.5,45.5019 78.495,79.5043 19.0033,33.9941 28.5008,72.6624 28.5008,115.997 0,43.3344 -9.49749,82.0027 -28.5008,115.997 -18.995,34.0023 -45.1627,60.501 -78.495,79.5043 -33.3322,18.995 -70.6686,28.5008 -112.001,28.5008 -41.3323,0 -78.6687,-9.50577 -112.001,-28.5008 -33.3322,-19.0033 -59.5,-45.5019 -78.5032,-79.5043 -18.995,-33.9941 -28.5008,-72.6624 -28.5008,-115.997 0,-43.3344 9.50577,-82.0027 28.5008,-115.997 19.0033,-34.0023 45.171,-60.501 78.5032,-79.5043 33.3322,-19.0033 70.6686,-28.5008 112.001,-28.5008z"/>
+  </font>
+  <style type="text/css">
+   <![CDATA[
+    @font-face { font-family:"Montserrat";font-variant:normal;font-style:normal;font-weight:bold;src:url("#FontID0") format(svg)}
+    .str1 {stroke-width:6.3;stroke-miterlimit:22.9256}
+    .str0 {stroke:#3C73CD;stroke-width:20;stroke-miterlimit:22.9256}
+    .str2 {stroke:#5090EE;stroke-width:7.62;stroke-miterlimit:22.9256}
+    .fil11 {fill:#376EC9}
+    .fil3 {fill:#3C73CD}
+    .fil10 {fill:#4B86D6}
+    .fil1 {fill:#4B86D6}
+    .fil0 {fill:#5090EE}
+    .fil2 {fill:#5AA6FE}
+    .fil9 {fill:#8FD0FF}
+    .fil5 {fill:#B7C3DD}
+    .fil6 {fill:#C8D7EF}
+    .fil8 {fill:#C8D7EF}
+    .fil4 {fill:white}
+    .fil7 {fill:white}
+    .fnt0 {font-weight:bold;font-size:1208.74px;font-family:'Montserrat'}
+   ]]>
+  </style>
+   <clipPath id="id0">
+    <rect x="17098.43" y="-3920.05" width="9626.58" height="8297.32"/>
+   </clipPath>
+    <mask id="id1">
+  <linearGradient id="id2" gradientUnits="userSpaceOnUse" x1="5449.14" y1="1948.56" x2="5354.32" y2="1404.24">
+   <stop offset="0" style="stop-opacity:1; stop-color:white"/>
+   <stop offset="0.85098" style="stop-opacity:0.501961; stop-color:white"/>
+   <stop offset="1" style="stop-opacity:0; stop-color:white"/>
+  </linearGradient>
+     <rect style="fill:url(#id2)" x="2571.58" y="1897.78" width="2379.69" height="216.22"/>
+    </mask>
+    <mask id="id3">
+  <linearGradient id="id4" gradientUnits="userSpaceOnUse" x1="2290.23" y1="2065.87" x2="2705.1" y2="2311.4">
+   <stop offset="0" style="stop-opacity:1; stop-color:white"/>
+   <stop offset="1" style="stop-opacity:0; stop-color:white"/>
+  </linearGradient>
+     <rect style="fill:url(#id4)" x="2463.99" y="1794.8" width="178.84" height="320.81"/>
+    </mask>
+    <mask id="id5">
+  <linearGradient id="id6" gradientUnits="userSpaceOnUse" x1="2290.23" y1="2065.87" x2="2705.1" y2="2311.4">
+   <stop offset="0" style="stop-opacity:1; stop-color:white"/>
+   <stop offset="1" style="stop-opacity:0; stop-color:white"/>
+  </linearGradient>
+     <rect style="fill:url(#id6)" x="2464.01" y="1897.9" width="178.82" height="217.71"/>
+    </mask>
+    <mask id="id7">
+  <linearGradient id="id8" gradientUnits="userSpaceOnUse" x1="2552.7" y1="2489.2" x2="2908.3" y2="2929.47">
+   <stop offset="0" style="stop-opacity:1; stop-color:white"/>
+   <stop offset="1" style="stop-opacity:0; stop-color:white"/>
+  </linearGradient>
+     <rect style="fill:url(#id8)" x="2732.71" y="2323.48" width="149.89" height="320.08"/>
+    </mask>
+    <mask id="id9">
+  <linearGradient id="id10" gradientUnits="userSpaceOnUse" x1="2536.74" y1="2491.68" x2="2924.26" y2="2937.62">
+   <stop offset="0" style="stop-opacity:1; stop-color:white"/>
+   <stop offset="1" style="stop-opacity:0; stop-color:white"/>
+  </linearGradient>
+     <rect style="fill:url(#id10)" x="2732.74" y="2451.1" width="149.86" height="192.46"/>
+    </mask>
+    <mask id="id11">
+  <linearGradient id="id12" gradientUnits="userSpaceOnUse" x1="3309.31" y1="1165.93" x2="2744.35" y2="1560.33">
+   <stop offset="0" style="stop-opacity:1; stop-color:white"/>
+   <stop offset="1" style="stop-opacity:0; stop-color:white"/>
+  </linearGradient>
+     <rect style="fill:url(#id12)" x="2483.93" y="1982.18" width="2413.05" height="212.62"/>
+    </mask>
+    <mask id="id13">
+  <linearGradient id="id14" gradientUnits="userSpaceOnUse" x1="3848.1" y1="2345.27" x2="2891.36" y2="2971.8">
+   <stop offset="0" style="stop-opacity:1; stop-color:white"/>
+   <stop offset="1" style="stop-opacity:0; stop-color:white"/>
+  </linearGradient>
+     <rect style="fill:url(#id14)" x="2773.2" y="2490.47" width="1996.47" height="229.93"/>
+    </mask>
+ </defs>
+ <g id="Layer_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <g style="clip-path:url(#id0)">
+   <image x="17098.43" y="-3920.05" width="9626.58" height="8297.32" xlink:href="koneksion_Images\koneksion_ImgID1.png"/>
+  </g>
+  <g id="_1795458007296">
+   <path class="fil0" d="M1917.34 1825.89c-0.49,-4.06 -0.98,-8.41 -1.44,-13.04 0.46,4.63 0.95,8.99 1.44,13.04zm-1.52 -13.87c-3.03,-30.85 -5.09,-74 -1.61,-124.9 -3.49,50.89 -1.42,94.04 1.61,124.9zm-1.61 -124.97c0.56,-8.16 1.26,-16.53 2.13,-25.08 -0.86,8.55 -1.57,16.92 -2.13,25.08zm2.13 -25.1c0.42,-4.18 0.88,-8.41 1.39,-12.68 -0.51,4.27 -0.97,8.5 -1.39,12.68zm8.54 -60.34c65.16,-357.04 318.03,-531.55 653.03,-583.09 183.64,-4.37 614.14,-8.54 1061.18,-21.12 501.8,-14.12 1020.48,-32.66 1156.21,47.52 95.76,56.57 187.63,160.92 227.02,269.25 156.52,211.29 247.7,1161.05 242.85,1399.07 -5.27,258.69 -153.11,454.03 -380.12,570.18l-15.84 10.56 116.15 575.46c0,0 6.2,16.54 -7.26,36.68l-800.5 -585.74 -1304.04 84.47c-738.51,-100.01 -761.7,-1262.51 -818.32,-1800.31 -50.42,-31.51 -94.98,-23.72 -130.36,-2.93zm2921.06 2361.52c-23.87,2.71 -46.39,3.22 -63.81,2.98l63.81 -2.98z"/>
+   <path class="fil1" d="M1915.44 1671.39l0.01 0 0.89 -9.42 -0.9 9.42zm144.69 -18.09l18.43 -2.3 0 -152.4 -139.73 39.92c-5.32,20.37 -9.99,41.39 -13.95,63.09 35.38,-20.79 79.94,-28.58 130.36,2.93 1.65,15.72 3.27,32.02 4.89,48.76zm-143.79 8.65c0.42,-4.18 0.89,-8.41 1.39,-12.68 -0.5,4.27 -0.97,8.5 -1.39,12.68z"/>
+   <path class="fil2" d="M4978.05 1231.73c64.66,89.93 151.57,272.91 155.14,372.81 0,0 102.34,633.76 126.87,973.34 -7.65,109.5 -17.28,219.71 -28.06,327.73 -56.19,164.47 -180.21,292.5 -346.95,377.81l-15.84 10.56 116.15 575.46c0,0 5.21,13.89 -4.29,31.71l-771.8 -623.01c0,0 -564.9,79.2 -1351.55,89.76 0,0 -754.96,42.23 -712.73,-1705.28 0,0 -21.11,-459.31 464.6,-591.3 619.25,-12.87 1923.28,-223.32 2368.46,160.41z"/>
+   <path class="fil3 str0" d="M2081.64 2940.26c0,0 -68.64,-168.94 -158.39,-1077.02 0,0 -25.49,-113.09 1.63,-261.63 35.38,-20.79 79.94,-28.58 130.36,2.93 56.62,537.8 79.81,1700.3 818.32,1800.31l1304.04 -84.47 800.5 585.74c-37.38,55.89 -167.28,64.62 -230.32,58.36l-733.85 -580.75c-685.88,41.83 -1653.76,375.74 -1932.29,-443.47z"/>
+   <path class="fil4" d="M2583.19 2111.38c0,0 -258.69,-153.11 0,-311.49l2249.07 -89.76c0,0 126.7,31.69 121.42,153.11 0,0 -5.28,126.71 -110.87,142.55l-2259.62 105.59z"/>
+   <path class="fil5" style="mask:url(#id1)" d="M4947.04 1902.01c-10.43,38.66 -36.99,93.69 -104.22,103.78l-2225.15 103.98 20.93 -0.98c-43.59,-55.57 -60.37,-111.99 -62.79,-163.39 3,4.12 6.4,8.39 10.23,12.7 25.53,28.66 70.48,58.69 144.98,52.96 126.33,-9.71 1929.58,-95.45 2216.02,-109.05z"/>
+   <path class="fil6" style="mask:url(#id3)" d="M2583.19 2111.38c0,0 -258.68,-153.11 0,-311.49l21.46 -0.86c-30.16,69.29 -58.85,191.47 33.95,309.76l-55.41 2.59z"/>
+   <path class="fil6" style="mask:url(#id5)" d="M2583.19 2111.38c0,0 -157.32,-93.13 -103.87,-209.25 1.83,0.65 3.71,1.58 5.64,2.87 16.74,11.16 62.89,40.7 92.42,59.55 5.38,46.09 22.98,95.5 61.22,144.24l-55.41 2.59z"/>
+   <path class="fil7" d="M2847.17 2639.33c0,0 -248.14,-147.83 0,-316.77 0,0 1779.18,-100.32 1863.65,-84.48 84.48,15.84 200.63,205.91 -5.27,290.38l-1858.38 110.87z"/>
+   <path class="fil8" d="M4811.07 2437.49c-14.66,34.57 -47.12,67.01 -105.52,90.97l-1826.53 108.96 -1.04 -1.24c-16.68,-55.14 -26.71,-107.79 -32.43,-155.41 22.58,26.04 63.67,61.62 117.77,58.24l1847.75 -101.52z"/>
+   <path class="fil6" style="mask:url(#id7)" d="M2847.17 2639.33c0,0 -243.02,-144.83 -7.35,-311.62 -3.33,70.13 0.12,183.43 38.55,309.75l-31.2 1.87z"/>
+   <path class="fil6" style="mask:url(#id9)" d="M2847.17 2639.33c0,0 -119.26,-76.49 -109.64,-184 37.28,18.72 86.43,26.61 109.94,29.48 6,47.32 15.72,98.82 30.9,152.51l-31.2 2.01z"/>
+   <path class="fil9" d="M2160.83 1330.01c0,0 63.36,-174.22 216.46,-242.85 0,0 -130.7,100.96 -216.46,242.85z"/>
+   <path class="fil10" style="mask:url(#id11)" d="M2488.16 2026.9c0,0 42.24,153.11 153.11,163.67 0,0 1626.08,-105.6 2227.94,-147.83l23.54 -56.33 -0.02 0c-13.46,9.37 -29.88,16.37 -49.91,19.38l-2259.63 105.59c0,0 -55.04,-32.6 -88.95,-83.26l-6.08 -1.22z"/>
+   <path class="fil10" style="mask:url(#id13)" d="M2777.43 2578.58c0,0 32.78,161.05 159.49,134.66l1747.51 -121.43 81.01 -97.11 -0.07 0c-15.88,12.41 -35.6,23.82 -59.82,33.76l-1858.38 110.87c0,0 -38.28,-22.82 -69.73,-60.75l-0.01 0z"/>
+   <g transform="matrix(0.99323 0.116161 -0.116161 0.99323 452.07 130.095)">
+    <text x="3788.83" y="2336.8"  class="fil11 str2 fnt0">ON</text>
+   </g>
+  </g>
+ </g>
+</svg>
