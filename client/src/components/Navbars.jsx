@@ -26,6 +26,13 @@ export default function Navbar() {
       {/* Bagian ini adalah navbar */}
       <div className="container mx-auto flex flex-wrap items-center">
         <div className="flex w-full md:w-1/2 justify-center md:justify-start text-white font-extrabold">
+          <Link to={"/"}>
+            <img
+              src="/koneksion-logo.png"
+              className="h-10 hover:shadow-2xl"
+            ></img>
+          </Link>
+
           <a
             className="text-white no-underline hover:text-white hover:no-underline"
             href="#"
