@@ -1,7 +1,7 @@
 const axios = require("axios");
 const { Group, GroupMessage, User, Profile } = require("../models");
 const { default: OpenAI } = require("openai");
-const openai = new OpenAI({ apiKey: process.env.OPEN_AI });
+// const openai = new OpenAI({ apiKey: process.env.OPEN_AI });
 const imgurClientId = process.env.imgurClientId;
 const giphyAPI_KEY = process.env.giphyAPI_KEY;
 // const OPEN_AI_KEY = process.env.OPEN_AI;
