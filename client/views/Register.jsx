@@ -6,6 +6,7 @@ import { registerSubmit } from "../src/features/User/RegisterSlice";
 export default function Register() {
   const dispatch = useDispatch();
   const nav = useNavigate();
+  document.title = "Register - KoneksiON";
 
   const [userData, setUserData] = useState({
     username: "",

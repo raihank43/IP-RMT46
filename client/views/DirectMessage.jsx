@@ -32,6 +32,7 @@ export default function DirectMessage() {
   const loggedProfile = useSelector(
     (state) => state.currentlyLoggedProfile.userDataLogin
   );
+  document.title = receiverUsername + " Direct Message - KoneksiON";
 
   useEffect(() => {
     fetchLoggedProfile();

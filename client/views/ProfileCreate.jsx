@@ -9,6 +9,7 @@ export default function ProfileCreate() {
   const [bio, setBio] = useState("");
   const [fullName, setFullName] = useState("");
   const dispatch = useDispatch();
+  document.title = "Create Profile - KoneksiON";
 
   const nav = useNavigate();
 

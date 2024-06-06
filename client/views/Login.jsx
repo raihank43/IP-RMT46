@@ -46,6 +46,7 @@ export default function Login() {
   };
   // google OAuth
   useEffect(() => {
+    document.title = "Login - KoneksiON";
     // function handleCredentialResponse(response) {
     //   console.log("Encoded JWT ID token: " + response.credential);
     // }
