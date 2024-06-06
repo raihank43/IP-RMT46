@@ -2,6 +2,7 @@ const { Op } = require("sequelize");
 const { PrivateMessage, GroupMessage, User, Profile } = require("../models");
 const axios = require("axios");
 const imgurClientId = process.env.imgurClientId;
+const cloudinary = require("../helpers/cloudinary");
 
 module.exports = class MessageController {
   static async getDirectMessages(req, res, next) {
@@ -95,29 +96,24 @@ module.exports = class MessageController {
       }
 
       if (req.file) {
-        const imageBuffer = req.file.buffer;
-        const base64Image = imageBuffer.toString("base64");
+        // generate randomName for file
+        let randomName =
+          Math.random().toString(36).substring(2, 15) +
+          Math.random().toString(36).substring(2, 15);
 
-        const { data } = await axios.post(
-          "https://api.imgur.com/3/image",
-          {
-            image: base64Image,
-            type: "base64",
-          },
-          {
-            headers: {
-              Authorization: "Client-ID " + imgurClientId,
-            },
-          }
-        );
-
-        const linkImgur = data.data.link;
+        const mimeType = req.file.mimetype;
+        const data = Buffer.from(req.file.buffer).toString("base64");
+        const dataURI = `data:${mimeType};base64,${data}`;
+        const result = await cloudinary.uploader.upload(dataURI, {
+          folder: "koneksion/privateimages",
+          public_id: randomName,
+        });
 
         const sendPrivateMessage = await PrivateMessage.create({
           text,
           SenderId: req.user.id,
           ReceiverId: findReceivedUser.id,
-          imgUploadPriv: linkImgur,
+          imgUploadPriv: result.secure_url,
         });
         return res.status(201).json(sendPrivateMessage);
       }
