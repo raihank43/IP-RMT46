@@ -105,6 +105,8 @@ export default function DirectMessage() {
     dispatch(fetchDirectMessages(username)); //passing username karena butuh username untuk fetchdata
   }, [username]);
 
+  console.log(message, "<<<<<");
+
   return (
     <>
       <div className="flex h-screen overflow-hidden ">
@@ -118,6 +120,13 @@ export default function DirectMessage() {
             <h1 className="text-2xl font-semibold">@{receiverUsername}</h1>
           </header>
           {/* Chat Messages */}
+          {!message.length && (
+            <div className="h-screen flex justify-center p-10">
+              <h1 className="text-xl text-gray-400 italic">
+                This is the beginning of your chat with @{receiverUsername}
+              </h1>
+            </div>
+          )}
           <div className="h-screen max-h-[80vh] overflow-y-auto p-4 pb-36">
             {message.map((el, index) => {
               return el.messageBelongsToLoggedUser == true ? (
