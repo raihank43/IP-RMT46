@@ -25,7 +25,7 @@ module.exports = class ProfileController {
       if (fullName) {
         queryOption.where.fullName = { [Op.iLike]: `%${fullName}%` };
       }
-      
+
       const getAllProfiles = await Profile.findAll(queryOption);
       res.status(200).json(getAllProfiles);
     } catch (error) {
@@ -75,6 +75,7 @@ module.exports = class ProfileController {
         // options ada banyak
         // - public_id -> untuk nama file
         // - folder: -> untuk nama folder
+        folder: "koneksion/profile",
         public_id: randomName,
       });
 
